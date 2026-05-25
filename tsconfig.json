@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "declaration": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "lib": ["ES2022"]
+  },
+  "include": [
+    "ch01-landscape/**/*.ts",
+    "ch01-landscape/**/*.tsx",
+    "ch02-mastra-setup/**/*.ts",
+    "ch03-agent-tools/**/*.ts",
+    "ch04-memory-rag/**/*.ts",
+    "ch05-workflow/**/*.ts",
+    "ch06-observability/**/*.ts",
+    "ch07-sdk-comparison/**/*.ts",
+    "ch07-sdk-comparison/**/*.tsx",
+    "ch08-production/**/*.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,28 @@
+# Environment / secrets
+.env
+.env.local
+*.key
+*.secret
+credentials.json
+
+# Node.js
+node_modules/
+dist/
+*.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Coverage / test output
+coverage/
+*.lcov
+
+# Mastra runtime
+.mastra/

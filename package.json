@@ -1,0 +1,43 @@
+{
+  "name": "ts-agent-patterns-samples",
+  "version": "1.0.0",
+  "description": "Mastra ではじめる TypeScript AI エージェント実装 — サンプルコード",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@mastra/core": "1.35.0",
+    "@mastra/memory": "latest",
+    "@mastra/libsql": "latest",
+    "@mastra/pg": "latest",
+    "@mastra/mcp": "latest",
+    "@mastra/observability": "latest",
+    "@mastra/langfuse": "latest",
+    "@mastra/otel-exporter": "latest",
+    "@mastra/otel-bridge": "latest",
+    "@mastra/deployer-cloudflare": "latest",
+    "@ai-sdk/anthropic": "^3.0.0",
+    "@ai-sdk/openai": "latest",
+    "@ai-sdk/google": "latest",
+    "@ai-sdk/react": "latest",
+    "ai": "^6.0.0",
+    "@anthropic-ai/claude-agent-sdk": "0.3.150",
+    "@openai/agents": "0.11.5",
+    "agents": "0.13.2",
+    "zod": "^3.23.0",
+    "cockatiel": "^3.2.0",
+    "ioredis": "^5.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vitest": "^3.0.0",
+    "tsx": "^4.19.0",
+    "@cloudflare/workers-types": "^4.20250101.0"
+  }
+}
