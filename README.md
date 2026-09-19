@@ -4,6 +4,8 @@
 
 本書の各章で登場するコードをそのまま動かせる形で収録しています。
 
+Kindle 版: [Mastra ではじめる TypeScript AI エージェント実装](https://www.amazon.co.jp/dp/B0GX38ZD9F)
+
 ## 動作環境
 
 - **Node.js** v22 LTS 以上
