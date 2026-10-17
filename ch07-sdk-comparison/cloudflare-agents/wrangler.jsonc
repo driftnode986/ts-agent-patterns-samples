@@ -1,19 +1,24 @@
 // wrangler.jsonc
 {
   "name": "my-agent",
-  "compatibility_date": "2025-04-01",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "ai": { "binding": "AI" },
   "durable_objects": {
     "bindings": [
       {
         "name": "CUSTOMER_SUPPORT",
         "class_name": "CustomerSupport"
-      }
+      },
+      { "name": "CHAT_AGENT", "class_name": "ChatAgent" },
+      { "name": "RESEARCH_AGENT", "class_name": "ResearchAgent" }
     ]
   },
   "migrations": [
     {
       "tag": "v1",
-      "new_sqlite_classes": ["CustomerSupport"]
+      "new_sqlite_classes": ["CustomerSupport", "ChatAgent", "ResearchAgent"]
     }
   ]
 }

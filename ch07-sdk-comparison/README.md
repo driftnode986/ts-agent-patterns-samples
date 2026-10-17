@@ -1,73 +1,49 @@
 # ch07 - SDK 比較実践
 
-同一の要件 (カスタマーサポート Agent) を Vercel AI SDK / Cloudflare Agents / Claude Agent SDK / OpenAI Agents JS で実装し、Mastra との違いを API 設計・デプロイ・パフォーマンスの観点で横断比較します。
+同一の要件 (カスタマーサポート Agent) を Vercel AI SDK / Cloudflare Agents / Claude Agent SDK / OpenAI Agents JS で実装し、Mastra との違いを API 設計・デプロイの観点で比較します。SDK ごとにサブフォルダを分け、型チェックもサブフォルダごとに行います。
 
-## 本書の該当節
+## 本書の該当節と構成
 
-- 7.1 Vercel AI SDK — `src/vercel/route.ts` (streamText + tool)
-- 7.2 React useChat 接続 — `src/vercel/page.tsx`
-- 7.3 Mastra Agent を Next.js から呼ぶ — Pattern A (外部サーバー) / Pattern B (直接 import)
-- 7.5 Cloudflare Agents — `src/cloudflare/index.ts` (Durable Objects)
-- 7.6 wrangler 設定 — `src/cloudflare/wrangler.jsonc`
-- 7.7 Durable Execution — think() によるチェックポイントリカバリ
-- 7.9 Claude Agent SDK — `src/claude/agent.ts` (query / resume)
-- 7.12 OpenAI Agents JS — `src/openai/agent.ts` (handoffs / Guardrails)
-- 7.13 ベンチマーク — レイテンシ / Token / コード行数の 5 SDK 比較
-- 7.14 Mastra から各 SDK を呼ぶラッパー — `src/mastra/tools/claude-review.ts`
+- 7.1〜7.3 Vercel AI SDK — `vercel-ai-sdk/`
+  - `src/app/api/chat/route.ts` — streamText + tool (Next.js Route Handler)
+  - `src/app/chat/page.tsx` — useChat (React)
+  - `src/app/api/agent/route.ts` — パターン B: Mastra Agent を同じプロセスで呼ぶ
+  - `src/patterns/agent-route-a.ts` — パターン A: 別プロセスの Mastra サーバーを呼ぶ
+  - `src/mastra/` — 上の 2 つが呼ぶ customerSupport Agent
+- 7.5〜7.7 Cloudflare Agents — `cloudflare-agents/`
+  - `src/index.ts` — CustomerSupport (Durable Objects + state)
+  - `src/chat-agent.ts` — AIChatAgent (`@cloudflare/ai-chat`)
+  - `src/research-agent.ts` — runFiber による durable execution
+  - `src/env.d.ts` / `wrangler.jsonc` — バインディングの型と設定
+- 7.8 Mastra を Cloudflare Workers に — `mastra-cloudflare/`
+- 7.9〜7.11 Claude Agent SDK — `claude-agent-sdk/`
+  - `src/agent.ts` / `src/stateless.ts` / `src/resume.ts` / `src/read-only.ts`
+  - `src/run-query.ts` — query() の結果メッセージから最終回答とセッション ID を取り出す
+- 7.12 OpenAI Agents JS — `openai-agents/` (`src/agent.ts` handoffs / `src/guardrail.ts`)
+- 7.14 Mastra から Claude Agent SDK を呼ぶ — `mastra-wrapper/src/mastra/tools/claude-review.ts`
 
 ## SDK バージョン
 
-- Mastra `@mastra/core@1.35.0`
-- Vercel AI SDK `ai@6.0+` / `@ai-sdk/anthropic@3.0+`
-- Cloudflare Agents `agents@0.13.2`
-- Claude Agent SDK TypeScript `@anthropic-ai/claude-agent-sdk@0.3.150`
-- OpenAI Agents JS `@openai/agents@0.11.5`
+- Mastra `@mastra/core@1.78.0` / `@mastra/ai-sdk@1.11.1` / `@mastra/deployer-cloudflare@1.2.37`
+- Vercel AI SDK `ai@7.0.143` / `@ai-sdk/anthropic@4.0.82` / `@ai-sdk/react@4.0.147`
+- Cloudflare Agents `agents@0.28.1` / `@cloudflare/ai-chat@0.12.1`
+- Claude Agent SDK TypeScript `@anthropic-ai/claude-agent-sdk@0.3.302`
+- OpenAI Agents JS `@openai/agents@0.20.0`
 
 ## セットアップ
 
-```bash
-npm install
-```
-
-各 SDK の API キーを `.env` に設定してください。
+repo 直下で `npm install`（npm workspaces で全章の依存が入ります）。実際に LLM を呼ぶときは API キーを `.env` に設定します。
 
 ```bash
 ANTHROPIC_API_KEY=sk-ant-...
 OPENAI_API_KEY=sk-...
 ```
 
-Cloudflare Agents を実行する場合は wrangler CLI が必要です。
+Cloudflare Agents は章ディレクトリで `npx wrangler dev -c cloudflare-agents/wrangler.jsonc` を実行します（Workers AI と Durable Objects を使います。npm workspaces では npx が章ディレクトリで動くため `-c` で設定ファイルを指定します）。`npx wrangler deploy --dry-run -c cloudflare-agents/wrangler.jsonc` でバンドルできることを確認済みです。
+
+## 確認方法
 
 ```bash
-npx wrangler dev src/cloudflare/index.ts
+npm run typecheck   # 6 つのサブフォルダを型チェック
+npm test            # LLM・Claude Code・Durable Objects は偽物に差し替えて実行
 ```
-
-## 構成
-
-- `src/vercel/route.ts` — Vercel AI SDK: streamText + tool 定義 (Next.js Route Handler)
-- `src/vercel/page.tsx` — Vercel AI SDK: useChat フック (React)
-- `src/cloudflare/index.ts` — Cloudflare Agents: AIChatAgent + Durable Objects
-- `src/cloudflare/wrangler.jsonc` — Cloudflare: Durable Objects 設定
-- `src/claude/agent.ts` — Claude Agent SDK: query() + resume セッション
-- `src/openai/agent.ts` — OpenAI Agents JS: Agent + handoffs + InputGuardrail
-- `src/mastra/tools/claude-review.ts` — Mastra Tool として Claude Agent SDK をラップ
-
-## 実行方法
-
-```bash
-npx vitest run ch07-sdk-comparison/
-npx tsx ch07-sdk-comparison/src/vercel/route.ts
-npx tsx ch07-sdk-comparison/src/claude/agent.ts
-npx tsx ch07-sdk-comparison/src/openai/agent.ts
-```
-
-## トピック
-
-- Vercel AI SDK: フロントエンド統合の Toolkit (streamText, useChat, tool)
-- Cloudflare Agents: Durable Objects によるステートフル Edge Agent
-- Cloudflare Durable Execution: fibers によるクラッシュリカバリ
-- Claude Agent SDK: Claude Code ランタイムを API として利用 (query / resume)
-- OpenAI Agents JS: handoffs による Agent 間委譲と Guardrails (Input/Output)
-- Mastra を Cloudflare Workers にデプロイする制約と対策
-- 5 SDK のレイテンシ / Token 効率 / コード量ベンチマーク
-- Mastra Tool として外部 SDK をラップする統合パターン

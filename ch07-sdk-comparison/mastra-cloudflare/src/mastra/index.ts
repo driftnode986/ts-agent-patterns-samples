@@ -1,11 +1,12 @@
 // src/mastra/index.ts
 import { Mastra } from '@mastra/core';
 import { CloudflareDeployer } from '@mastra/deployer-cloudflare';
+import { customerSupport } from './agents/customer-support';
 
 export const mastra = new Mastra({
   agents: { customerSupport },
   deployer: new CloudflareDeployer({
-    scope: 'my-account-id',
-    projectName: 'my-agent-app',
+    account_id: 'my-account-id',
+    name: 'my-agent-app',
   }),
 });

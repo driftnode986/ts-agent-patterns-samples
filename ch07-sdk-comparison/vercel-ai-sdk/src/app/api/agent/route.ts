@@ -1,4 +1,6 @@
 // src/app/api/agent/route.ts
+import { createUIMessageStreamResponse } from 'ai';
+import { toAISdkStream } from '@mastra/ai-sdk';
 import { mastra } from '@/mastra';
 
 export async function POST(req: Request) {
@@ -6,5 +8,7 @@ export async function POST(req: Request) {
   const agent = mastra.getAgent('customerSupport');
 
   const result = await agent.stream(messages);
-  return result.toUIMessageStreamResponse();
+  return createUIMessageStreamResponse({
+    stream: toAISdkStream(result, { from: 'agent', version: 'v7' }),
+  });
 }

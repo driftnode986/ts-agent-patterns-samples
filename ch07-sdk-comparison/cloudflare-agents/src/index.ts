@@ -1,25 +1,61 @@
+// #region customer-support
 // src/index.ts
-import { Agent } from 'agents';
+import {
+  Agent,
+  getAgentByName,
+  type Connection,
+  type WSMessage,
+} from 'agents';
 
-export class ResearchAgent extends Agent<Env> {
-  async onMessage(query: string) {
-    const searchResults = await this.think(async () => {
-      return await this.env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
-        messages: [{ role: 'user', content: `Search: ${query}` }],
-      });
-    });
+type ChatMessage = {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+};
 
-    const summary = await this.think(async () => {
-      return await this.env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+type State = { history: ChatMessage[] };
+// #endregion
+
+// #region on-message
+export class CustomerSupport extends Agent<Env, State> {
+  async onMessage(connection: Connection, message: WSMessage) {
+    const text = String(message);
+    const response = await this.env.AI.run(
+      '@cf/meta/llama-3.1-8b-instruct-fp8',
+      {
         messages: [
-          {
-            role: 'user',
-            content: `Summarize: ${searchResults.response}`,
-          },
+          { role: 'system', content: 'あなたは顧客サポート担当者です。' },
+          ...(this.state?.history || []),
+          { role: 'user', content: text },
         ],
-      });
+      }
+    );
+    const reply = response.response ?? '';
+
+    this.setState({
+      ...this.state,
+      history: [
+        ...(this.state?.history || []),
+        { role: 'user', content: text },
+        { role: 'assistant', content: reply },
+      ],
     });
 
-    return summary.response;
+    connection.send(reply);
   }
 }
+// #endregion
+
+// #region fetch
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    const agent = await getAgentByName(env.CUSTOMER_SUPPORT, 'user-123');
+    return agent.fetch(request);
+  },
+};
+// #endregion
+
+// #region exports
+// wrangler.jsonc で宣言した Durable Object のクラスは src/index.ts から export する
+export { ChatAgent } from './chat-agent';
+export { ResearchAgent } from './research-agent';
+// #endregion

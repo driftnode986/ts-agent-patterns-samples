@@ -1,3 +1,4 @@
+// #region define
 // src/mastra/tools/claude-review.ts
 import { createTool } from '@mastra/core/tools';
 import { query } from '@anthropic-ai/claude-agent-sdk';
@@ -13,18 +14,26 @@ export const codeReviewTool = createTool({
     review: z.string(),
     issues: z.number(),
   }),
-  execute: async ({ context }) => {
-    const result = await query({
-      prompt: `${context.filePath} のコードをレビューして、問題点を報告してください`,
+  // #endregion
+  // #region execute
+  execute: async ({ filePath }) => {
+    let review = '';
+    for await (const message of query({
+      prompt: `${filePath} のコードをレビューして、問題点を報告してください`,
       options: {
         allowedTools: ['Read', 'Grep'],
         maxTurns: 5,
       },
-    });
+    })) {
+      if (message.type === 'result' && message.subtype === 'success') {
+        review = message.result;
+      }
+    }
 
     return {
-      review: result.result,
-      issues: (result.result.match(/問題/g) || []).length,
+      review,
+      issues: (review.match(/問題/g) || []).length,
     };
   },
 });
+// #endregion

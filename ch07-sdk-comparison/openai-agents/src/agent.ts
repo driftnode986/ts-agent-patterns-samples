@@ -3,7 +3,8 @@ import { Agent, run } from '@openai/agents';
 
 const triageAgent = new Agent({
   name: 'Triage',
-  instructions: 'ユーザーの問い合わせを分類し、適切な担当に振り分けてください。',
+  instructions:
+    'ユーザーの問い合わせを分類し、適切な担当に振り分けてください。',
   model: 'gpt-4o',
 });
 
