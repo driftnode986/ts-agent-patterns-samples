@@ -3,16 +3,20 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "typecheck": "tsc --noEmit -p cloudflare-agents && tsc --noEmit -p mastra && tsc --noEmit -p vercel-ai-sdk",
+    "typecheck": "tsc --noEmit -p claude-agent-sdk && tsc --noEmit -p cloudflare-agents && tsc --noEmit -p mastra && tsc --noEmit -p openai-agents && tsc --noEmit -p vercel-ai-sdk",
     "test": "vitest run"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "4.0.82",
+    "@anthropic-ai/claude-agent-sdk": "0.3.302",
     "@mastra/core": "1.78.0",
+    "@openai/agents": "0.20.0",
     "agents": "0.28.1",
-    "ai": "7.0.143"
+    "ai": "7.0.143",
+    "zod": "4.6.7"
   },
   "devDependencies": {
+    "@ai-sdk/provider": "4.0.29",
     "@cloudflare/workers-types": "5.20261016.1"
   }
 }
