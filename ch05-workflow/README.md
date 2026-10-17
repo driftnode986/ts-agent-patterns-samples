@@ -35,6 +35,7 @@ npm test            # テスト（偽のモデルを使うので API キー無�
   - `src/mastra/workflows/map-workflow.ts`
 - **5.5 Step 間のデータ受け渡し**
   - `src/mastra/workflows/tier-workflow.ts`
+  - `src/check-tier.ts`
 - **5.6 Suspend & Resume　人間判断が必要な箇所で待機**
   - `src/mastra/workflows/steps/approval.ts`
   - `src/mastra/workflows/order-workflow.ts`

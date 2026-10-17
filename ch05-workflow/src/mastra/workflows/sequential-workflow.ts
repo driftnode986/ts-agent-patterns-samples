@@ -25,11 +25,13 @@ const step3 = createStep({
   execute: async ({ inputData }) => ({ text: `${inputData.text}!` }),
 });
 
+// #region workflow
 const workflow = createWorkflow({
   id: 'sequential',
   inputSchema: textSchema,
   outputSchema: textSchema,
 });
+// #endregion
 
 // #region chain
 export const sequentialWorkflow = workflow

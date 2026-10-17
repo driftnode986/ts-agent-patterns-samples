@@ -5,7 +5,7 @@ import { LibSQLStore } from '@mastra/libsql';
 import { z } from 'zod';
 import { mastra } from '../src/mastra';
 import { approveOrder } from '../src/approve-order';
-import { showSuspendedStep } from '../src/inspect-run';
+import { resumeLater, showSuspendedStep } from '../src/inspect-run';
 import { startOrder } from '../src/start-order';
 import { approvalStep } from '../src/mastra/workflows/steps/approval';
 import { reviewWorkflow } from '../src/mastra/workflows/review-workflow';
@@ -111,6 +111,17 @@ describe('永続化と状態の読み出し (5.7)', () => {
       expect.objectContaining({ stepId: 'human-approval' }),
     );
     log.mockRestore();
+  });
+
+  it('createRun({ runId }) で同じ run を取り出して resume() できる', async () => {
+    const run = await mastra.getWorkflow('orderWorkflow').createRun();
+    await run.start({ inputData: { orderId: 'ORD-005', amount: 700 } });
+    // run オブジェクトを捨てて、runId だけで再開する
+    const result = await resumeLater(run.runId);
+    expect(result.status === 'success' && result.result).toEqual({
+      approved: true,
+      orderId: 'ORD-005',
+    });
   });
 });
 

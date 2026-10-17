@@ -1,8 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { RequestContext } from '@mastra/core/request-context';
 import { statefulWorkflow } from '../src/mastra/workflows/stateful-workflow';
 import { mapWorkflow } from '../src/mastra/workflows/map-workflow';
-import { tierWorkflow } from '../src/mastra/workflows/tier-workflow';
+import { checkTier } from '../src/check-tier';
 
 describe('State とデータの受け渡し (5.4・5.5)', () => {
   it('stateSchema の default が初期値になり、setState の更新が後の Step から見える', async () => {
@@ -36,10 +35,7 @@ describe('State とデータの受け渡し (5.4・5.5)', () => {
     ['enterprise', 1000],
     ['free', 50],
   ])('requestContext の user-tier=%s で maxResults が %i になる', async (tier, max) => {
-    const requestContext = new RequestContext();
-    requestContext.set('user-tier', tier);
-    const run = await tierWorkflow.createRun();
-    const result = await run.start({ inputData: { userId: 'u1' }, requestContext });
+    const result = await checkTier(tier);
     expect(result.status === 'success' && result.result).toEqual({ maxResults: max });
   });
 });
