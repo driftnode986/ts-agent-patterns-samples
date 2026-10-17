@@ -35,6 +35,16 @@ describe('agents', () => {
     });
     expect(res.text).toBe('東京は晴れ、22度です。');
   });
+
+  it('weatherAgent instructions name the tool by its key', async () => {
+    const { weatherAgent } = await import('../src/mastra/agents');
+    // LLM に見える Tool 名は tools のキー (id の get-weather ではない)
+    const keys = Object.keys(await weatherAgent.listTools());
+    expect(keys).toEqual(['weatherTool']);
+    const instructions = String(await weatherAgent.getInstructions());
+    expect(instructions).toContain('weatherTool');
+    expect(instructions).not.toContain('get-weather');
+  });
 });
 
 describe('mastra instance', () => {
