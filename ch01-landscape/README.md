@@ -27,7 +27,7 @@ SDK ごとにフォルダを分けています（それぞれに tsconfig.json �
   - `claude-agent-sdk/src/index.ts`
   - `openai-agents/src/index.ts`
 - **1.9 本書で扱う Mastra のバージョンと pin 戦略**
-  - `package.json`
+  - `../ch02-mastra-setup/package.json`
 
 ## 主な依存（版は package.json に固定）
 
