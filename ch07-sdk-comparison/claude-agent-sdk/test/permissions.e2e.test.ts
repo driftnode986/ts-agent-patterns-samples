@@ -12,14 +12,14 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import {
   startFakeAnthropicApi,
   type PlannedCall,
-} from '../../testing/fake-anthropic-api';
+} from './support/fake-anthropic-api';
 import {
   claudeCodeEnv,
   createWorkdir,
   SOURCE,
   WRITTEN_BY_ATTEMPTS,
   writeAttempts,
-} from '../../testing/claude-code-e2e';
+} from './support/claude-code-e2e';
 
 const run = promisify(execFile);
 const tsx = fileURLToPath(new URL('../../../node_modules/.bin/tsx', import.meta.url));

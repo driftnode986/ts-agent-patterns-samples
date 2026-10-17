@@ -8,14 +8,14 @@ import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest';
 import { Agent } from '@mastra/core/agent';
 import { codeReviewTool } from '../src/mastra/tools/claude-review';
 import { scriptedModel } from '../../testing/mock-model';
-import { startFakeAnthropicApi } from '../../testing/fake-anthropic-api';
+import { startFakeAnthropicApi } from '../../claude-agent-sdk/test/support/fake-anthropic-api';
 import {
   claudeCodeEnv,
   createWorkdir,
   SOURCE,
   WRITTEN_BY_ATTEMPTS,
   writeAttempts,
-} from '../../testing/claude-code-e2e';
+} from '../../claude-agent-sdk/test/support/claude-code-e2e';
 
 let work: Awaited<ReturnType<typeof createWorkdir>>;
 let api: Awaited<ReturnType<typeof startFakeAnthropicApi>>;
