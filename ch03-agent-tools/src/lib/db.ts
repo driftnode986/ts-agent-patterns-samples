@@ -1,5 +1,6 @@
 // #region setup
-// 顧客データベースの代わり。LibSQL のメモリ上の DB に顧客を2件入れておく
+// 顧客データベースの代わり。
+// LibSQL のメモリ上の DB に顧客を2件入れておく
 import { createClient } from '@libsql/client';
 
 const client = createClient({ url: ':memory:' });

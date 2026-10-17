@@ -20,7 +20,8 @@ for (const testCase of testCases) {
   const keywordHits = testCase.expectedKeywords.filter(kw =>
     results.some(r => r.includes(kw))
   );
-  const precision = keywordHits.length / testCase.expectedKeywords.length;
+  const precision =
+    keywordHits.length / testCase.expectedKeywords.length;
 
   console.log(`Query: ${testCase.query}`);
   console.log(`  Precision: ${(precision * 100).toFixed(0)}%`);

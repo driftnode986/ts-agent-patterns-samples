@@ -10,7 +10,9 @@ export function saveSession(token: string, session: Session): void {
   sessions.set(token, session);
 }
 
-export async function getSession(req: Request): Promise<Session | null> {
+export async function getSession(
+  req: Request,
+): Promise<Session | null> {
   const auth = req.headers.get('authorization') ?? '';
   const token = auth.replace(/^Bearer /, '');
   return sessions.get(token) ?? null;

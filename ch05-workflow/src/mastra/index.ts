@@ -2,7 +2,9 @@ import { Mastra } from '@mastra/core';
 import { LibSQLStore } from '@mastra/libsql';
 import { paymentWorkflow } from './workflows/payment-workflow';
 import { orderWorkflow } from './workflows/order-workflow';
-import { documentReviewWorkflow } from './workflows/document-review-workflow';
+import {
+  documentReviewWorkflow,
+} from './workflows/document-review-workflow';
 import { dailyReport } from './workflows/daily-report-workflow';
 import { reviewerAgent } from './agents/reviewer';
 

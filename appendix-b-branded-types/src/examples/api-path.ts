@@ -3,7 +3,10 @@ type ApiVersion = 'v1' | 'v2';
 type Resource = 'users' | 'threads' | 'messages';
 type ApiPath = `/api/${ApiVersion}/${Resource}`;
 
-function callApi(path: ApiPath, options?: RequestInit): Promise<Response> {
+function callApi(
+  path: ApiPath,
+  options?: RequestInit
+): Promise<Response> {
   return fetch(`https://api.example.com${path}`, options);
 }
 

@@ -26,7 +26,9 @@ const chunks = chunkDocument(fullDocument, {
 for (let i = 0; i < chunks.length; i++) {
   const { embedding } = await embed({
     value: chunks[i],
-    model: new ModelRouterEmbeddingModel('openai/text-embedding-3-small'),
+    model: new ModelRouterEmbeddingModel(
+      'openai/text-embedding-3-small',
+    ),
   });
 
   await pgVector.upsert({

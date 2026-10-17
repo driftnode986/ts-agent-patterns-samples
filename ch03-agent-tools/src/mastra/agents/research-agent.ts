@@ -1,6 +1,10 @@
 import { Agent } from '@mastra/core/agent';
 import { anthropic } from '@ai-sdk/anthropic';
-import { searchWebTool, searchDatabaseTool, getCalendarTool } from '../tools';
+import {
+  searchWebTool,
+  searchDatabaseTool,
+  getCalendarTool,
+} from '../tools';
 
 export const researchAgent = new Agent({
   id: 'research-agent',

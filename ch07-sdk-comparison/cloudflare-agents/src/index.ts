@@ -22,7 +22,10 @@ export class CustomerSupport extends Agent<Env, State> {
       '@cf/meta/llama-3.1-8b-instruct-fp8',
       {
         messages: [
-          { role: 'system', content: 'あなたは顧客サポート担当者です。' },
+          {
+            role: 'system',
+            content: 'あなたは顧客サポート担当者です。',
+          },
           ...(this.state?.history || []),
           { role: 'user', content: text },
         ],
@@ -47,7 +50,10 @@ export class CustomerSupport extends Agent<Env, State> {
 // #region fetch
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
-    const agent = await getAgentByName(env.CUSTOMER_SUPPORT, 'user-123');
+    const agent = await getAgentByName(
+      env.CUSTOMER_SUPPORT,
+      'user-123',
+    );
     return agent.fetch(request);
   },
 };

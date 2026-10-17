@@ -19,18 +19,22 @@ await pgVector.createIndex({
 const documents = [
   {
     id: 'doc-1',
-    text: 'Mastra の Agent は instructions でシステムプロンプトを定義します',
+    text: 'Mastra の Agent は instructions で' +
+      'システムプロンプトを定義します',
   },
   {
     id: 'doc-2',
-    text: 'Tool は createTool 関数で定義し、Zod スキーマで入出力を固定します',
+    text: 'Tool は createTool 関数で定義し、' +
+      'Zod スキーマで入出力を固定します',
   },
 ];
 
 for (const doc of documents) {
   const { embedding } = await embed({
     value: doc.text,
-    model: new ModelRouterEmbeddingModel('openai/text-embedding-3-small'),
+    model: new ModelRouterEmbeddingModel(
+      'openai/text-embedding-3-small',
+    ),
   });
 
   await pgVector.upsert({

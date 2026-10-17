@@ -3,7 +3,9 @@ import { mastra } from '../mastra';
 
 const workflow = mastra.getWorkflow('approvalWorkflow');
 const run = await workflow.createRun();
-const first = await run.start({ inputData: { request: '5 万円を返金して' } });
+const first = await run.start({
+  inputData: { request: '5 万円を返金して' },
+});
 
 if (first.status === 'suspended') {
   // suspend() に渡した値（理由と通知先）。これを Slack などに送る

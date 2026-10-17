@@ -3,7 +3,8 @@ import { embed } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { db } from './db';
 
-// 文章を 1536 次元のベクトルにし、pgvector が読める '[0.1,0.2,...]' の形にする
+// 文章を 1536 次元のベクトルにし、
+// pgvector が読める '[0.1,0.2,...]' の形にする
 export async function toVector(text: string): Promise<string> {
   const { embedding } = await embed({
     model: openai.embedding('text-embedding-3-small'),

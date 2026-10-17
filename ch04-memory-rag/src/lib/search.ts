@@ -5,7 +5,9 @@ import { ModelRouterEmbeddingModel } from '@mastra/core/llm';
 export async function searchKnowledgeBase(query: string) {
   const { embedding } = await embed({
     value: query,
-    model: new ModelRouterEmbeddingModel('openai/text-embedding-3-small'),
+    model: new ModelRouterEmbeddingModel(
+      'openai/text-embedding-3-small',
+    ),
   });
 
   const pgVector = new PgVector({

@@ -9,8 +9,11 @@ const faqs = [
 
 export const searchKnowledgeBase = createTool({
   id: 'search-knowledge-base',
-  description: 'サポート用の FAQ をキーワードで検索し、一致した回答を返します',
-  inputSchema: z.object({ keyword: z.string().describe('検索キーワード') }),
+  description:
+    'サポート用の FAQ をキーワードで検索し、一致した回答を返します',
+  inputSchema: z.object({
+    keyword: z.string().describe('検索キーワード'),
+  }),
   outputSchema: z.object({ answers: z.array(z.string()) }),
   execute: async ({ keyword }) => ({
     answers: faqs.filter((faq) => faq.includes(keyword)),

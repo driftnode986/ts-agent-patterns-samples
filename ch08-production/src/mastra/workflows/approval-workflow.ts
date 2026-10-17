@@ -12,7 +12,11 @@ const analyzeRequest = createStep({
   }),
   execute: async () => {
     // LLM がリクエストを分析し、リスクレベルを判定
-    return { action: 'refund', riskLevel: 'high' as const, amount: 50000 };
+    return {
+      action: 'refund',
+      riskLevel: 'high' as const,
+      amount: 50000,
+    };
   },
 });
 // #endregion
@@ -26,7 +30,10 @@ const humanApproval = createStep({
     amount: z.number().optional(),
   }),
   outputSchema: z.object({ approved: z.boolean() }),
-  suspendSchema: z.object({ reason: z.string(), notifyChannel: z.string() }),
+  suspendSchema: z.object({
+    reason: z.string(),
+    notifyChannel: z.string(),
+  }),
   resumeSchema: z.object({ decision: z.enum(['approve', 'reject']) }),
   execute: async ({ inputData, resumeData, suspend }) => {
     // resume() で再開されたときは、人間の判断が resumeData に入っている

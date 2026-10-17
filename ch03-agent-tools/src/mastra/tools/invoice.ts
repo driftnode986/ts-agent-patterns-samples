@@ -5,7 +5,8 @@ import { billingService } from '../../lib/billing-service';
 
 export const createInvoiceTool = createTool({
   id: 'create-invoice',
-  description: '顧客に対して請求書を作成します。金額と通貨を指定してください',
+  description:
+    '顧客に対して請求書を作成します。金額と通貨を指定してください',
   inputSchema: z.object({
     customerId: z.string().describe('請求先の顧客 ID'),
     amount: z.number().positive().describe('請求金額 (正の数)'),

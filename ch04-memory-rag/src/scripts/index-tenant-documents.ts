@@ -21,12 +21,15 @@ export async function indexTenantDocument(
   filename: string,
   text: string,
 ) {
-  const chunks = chunkDocument(text, { maxChunkSize: 1000, overlap: 200 });
+  const options = { maxChunkSize: 1000, overlap: 200 };
+  const chunks = chunkDocument(text, options);
 
   for (const [i, chunk] of chunks.entries()) {
     const { embedding } = await embed({
       value: chunk,
-      model: new ModelRouterEmbeddingModel('openai/text-embedding-3-small'),
+      model: new ModelRouterEmbeddingModel(
+        'openai/text-embedding-3-small',
+      ),
     });
 
     // #region upsert

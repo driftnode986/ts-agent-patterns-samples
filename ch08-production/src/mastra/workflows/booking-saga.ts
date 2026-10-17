@@ -3,7 +3,10 @@ import { createWorkflow, createStep } from '@mastra/core/workflows';
 import { z } from 'zod';
 import { hotelAPI, flightAPI } from '../../lib/travel-api';
 
-const TripInput = z.object({ destination: z.string(), dates: z.string() });
+const TripInput = z.object({
+  destination: z.string(),
+  dates: z.string(),
+});
 
 const bookHotel = createStep({
   id: 'book-hotel',

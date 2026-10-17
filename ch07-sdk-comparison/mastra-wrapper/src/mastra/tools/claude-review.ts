@@ -18,7 +18,8 @@ export const codeReviewTool = createTool({
   execute: async ({ filePath }) => {
     let review = '';
     for await (const message of query({
-      prompt: `${filePath} のコードをレビューして、問題点を報告してください`,
+      prompt:
+        `${filePath} のコードをレビューして、問題点を報告してください`,
       options: {
         tools: ['Read', 'Grep', 'Glob'], // 読み取り用の組込ツールだけ
         allowedTools: ['Read', 'Grep', 'Glob'],

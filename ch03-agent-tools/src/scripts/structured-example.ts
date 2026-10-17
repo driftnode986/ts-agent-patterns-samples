@@ -19,8 +19,8 @@ const response = await supportAgent.generate(
 );
 
 // response.object は taskSchema の型で推論される
-console.log(response.object.title);       // "Next.js ログイン画面の実装"
-console.log(response.object.priority);    // "high"
+console.log(response.object.title); // "Next.js ログイン画面の実装"
+console.log(response.object.priority); // "high"
 console.log(response.object.estimatedHours); // 8
 // #endregion
 

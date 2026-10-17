@@ -1,5 +1,8 @@
 // ホテル・航空券の予約 API の代わりに、メモリ上で動く簡単な実装
-const hotels = new Map<string, { destination: string; dates: string }>();
+const hotels = new Map<
+  string,
+  { destination: string; dates: string }
+>();
 let nextId = 1;
 
 export const hotelAPI = {

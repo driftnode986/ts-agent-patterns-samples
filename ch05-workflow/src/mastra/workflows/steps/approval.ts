@@ -25,7 +25,8 @@ export const approvalStep = createStep({
   execute: async ({ inputData, resumeData, suspend }) => {
     if (!resumeData?.approved) {
       await suspend({
-        reason: `注文 ${inputData.orderId} (¥${inputData.amount}) の承認が必要`,
+        reason: `注文 ${inputData.orderId} ` +
+          `(¥${inputData.amount}) の承認が必要`,
         requiredApprover: 'manager',
       });
     }

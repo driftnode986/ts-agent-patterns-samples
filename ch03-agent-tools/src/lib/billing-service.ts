@@ -11,7 +11,9 @@ type Invoice = {
 const invoices: Invoice[] = [];
 
 export const billingService = {
-  async create(input: Omit<Invoice, 'id' | 'status'>): Promise<Invoice> {
+  async create(
+    input: Omit<Invoice, 'id' | 'status'>
+  ): Promise<Invoice> {
     const invoice: Invoice = {
       ...input,
       id: `inv-${invoices.length + 1}`,

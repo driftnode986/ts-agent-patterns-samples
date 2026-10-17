@@ -20,7 +20,8 @@ export const costGuard = createStep({
     );
     if (cost > COST_CEILING_USD) {
       return bail({
-        reason: `コスト上限超過: $${cost.toFixed(2)} > $${COST_CEILING_USD}`,
+        reason:
+          `コスト上限超過: $${cost.toFixed(2)} > $${COST_CEILING_USD}`,
       });
     }
     return { withinBudget: true };

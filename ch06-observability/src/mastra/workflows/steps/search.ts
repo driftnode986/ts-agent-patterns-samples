@@ -26,7 +26,8 @@ export const searchStep = createStep({
       return { results };
     } catch (error) {
       dbSpan?.error({
-        error: error instanceof Error ? error : new Error(String(error)),
+        error:
+          error instanceof Error ? error : new Error(String(error)),
         metadata: { retryable: true },
       });
       throw error;

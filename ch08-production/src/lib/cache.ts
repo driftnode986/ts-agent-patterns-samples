@@ -1,7 +1,9 @@
 import { Redis } from 'ioredis';
 import crypto from 'crypto';
 
-const redis = new Redis(process.env.REDIS_URL ?? 'redis://localhost:6379');
+const redis = new Redis(
+  process.env.REDIS_URL ?? 'redis://localhost:6379',
+);
 
 export async function cachedLLMCall(
   prompt: string,

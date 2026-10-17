@@ -6,13 +6,20 @@ export const mcpClient = new MCPClient({
     github: {
       url: new URL('https://api.githubcopilot.com/mcp/'),
       requestInit: {
-        headers: { Authorization: `Bearer ${process.env.GITHUB_TOKEN}` },
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        },
       },
     },
-    // ローカルのプロセスとして起動 (stdio)。./data の下だけを読み書きできる
+    // ローカルのプロセスとして起動 (stdio)。
+    // ./data の下だけを読み書きできる
     filesystem: {
       command: 'npx',
-      args: ['-y', '@modelcontextprotocol/server-filesystem@1.0.0', './data'],
+      args: [
+        '-y',
+        '@modelcontextprotocol/server-filesystem@1.0.0',
+        './data',
+      ],
     },
   },
   timeout: 30000,

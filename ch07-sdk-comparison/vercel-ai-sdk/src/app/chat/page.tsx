@@ -20,7 +20,9 @@ export default function ChatPage() {
         <div key={m.id}>
           <strong>{m.role}:</strong>{' '}
           {m.parts.map((part, i) =>
-            part.type === 'text' ? <span key={i}>{part.text}</span> : null,
+            part.type === 'text' ? (
+              <span key={i}>{part.text}</span>
+            ) : null,
           )}
         </div>
       ))}

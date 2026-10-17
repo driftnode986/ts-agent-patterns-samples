@@ -17,7 +17,11 @@
   "migrations": [
     {
       "tag": "v1",
-      "new_sqlite_classes": ["CustomerSupport", "ChatAgent", "ResearchAgent"]
+      "new_sqlite_classes": [
+        "CustomerSupport",
+        "ChatAgent",
+        "ResearchAgent"
+      ]
     }
   ]
 }

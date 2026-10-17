@@ -18,7 +18,8 @@ export const queryDatabaseTool = createTool({
   execute: async (inputData) => {
     if (!inputData.query.trim().toUpperCase().startsWith('SELECT')) {
       throw new Error(
-        'SELECT 文のみ実行できます。INSERT / UPDATE / DELETE は禁止されています'
+        'SELECT 文のみ実行できます。' +
+          'INSERT / UPDATE / DELETE は禁止されています'
       );
     }
 

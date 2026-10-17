@@ -11,9 +11,11 @@ export function calculateCost(
   pricePerMillionOutput: UsdCents
 ): UsdCents {
   const inputCost =
-    (inputTokens as number) * (pricePerMillionInput as number) / 1_000_000;
+    ((inputTokens as number) * (pricePerMillionInput as number)) /
+    1_000_000;
   const outputCost =
-    (outputTokens as number) * (pricePerMillionOutput as number) / 1_000_000;
+    ((outputTokens as number) * (pricePerMillionOutput as number)) /
+    1_000_000;
   return (inputCost + outputCost) as unknown as UsdCents;
 }
 // #endregion

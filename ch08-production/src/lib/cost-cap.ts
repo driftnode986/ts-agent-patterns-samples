@@ -27,7 +27,10 @@ export function checkCostCap(estimatedTokens: number): boolean {
   return true;
 }
 
-export function recordUsage(inputTokens: number, outputTokens: number): void {
+export function recordUsage(
+  inputTokens: number,
+  outputTokens: number
+): void {
   const total = inputTokens + outputTokens;
   tracker.dailyTokens += total;
   tracker.monthlyTokens += total;

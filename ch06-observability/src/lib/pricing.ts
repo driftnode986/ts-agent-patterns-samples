@@ -12,8 +12,8 @@ export function calculateCost(
 ): number {
   const price = PRICES[model];
   if (!price) throw new Error(`料金が未登録のモデル: ${model}`);
-  return (
-    (inputTokens * price.input + outputTokens * price.output) / 1_000_000
-  );
+  const total =
+    inputTokens * price.input + outputTokens * price.output;
+  return total / 1_000_000;
 }
 // #endregion

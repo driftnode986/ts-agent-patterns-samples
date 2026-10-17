@@ -7,7 +7,8 @@ import type {
 export class PiiRedactor implements SpanOutputProcessor {
   name = 'pii-redactor';
 
-  // カード番号を先に置く (電話番号のパターンがカード番号の一部に一致するため)
+  // カード番号を先に置く
+  // (電話番号のパターンがカード番号の一部に一致するため)
   private readonly patterns = [
     { regex: /\d{4}-\d{4}-\d{4}-\d{4}/g, replacement: '[CARD]' },
     { regex: /[\w.-]+@[\w.-]+\.\w+/g, replacement: '[EMAIL]' },
@@ -29,7 +30,8 @@ export class PiiRedactor implements SpanOutputProcessor {
   private redact(value: unknown): unknown {
     if (typeof value === 'string') {
       return this.patterns.reduce(
-        (text, { regex, replacement }) => text.replace(regex, replacement),
+        (text, { regex, replacement }) =>
+          text.replace(regex, replacement),
         value
       );
     }

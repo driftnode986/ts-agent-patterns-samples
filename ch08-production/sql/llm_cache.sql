@@ -1,4 +1,5 @@
--- sql/llm_cache.sql（Semantic Cache のテーブル。最初に 1 回だけ実行する）
+-- sql/llm_cache.sql（Semantic Cache のテーブル。
+-- 最初に 1 回だけ実行する）
 CREATE EXTENSION IF NOT EXISTS vector;
 
 CREATE TABLE IF NOT EXISTS llm_cache (

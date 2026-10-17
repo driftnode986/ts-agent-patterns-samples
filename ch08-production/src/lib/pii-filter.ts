@@ -6,9 +6,10 @@ import { RegexFilterProcessor } from '@mastra/core/processors';
 // #endregion
 
 // #region mask
-// (?<![\d-]) と (?![\d-]) は「前後に数字もハイフンも無い」という条件で、
-// 長い番号の途中から一致しないようにする。maskPII() は上から順に
-// 置き換えるため、重なる場合に備えて長い番号のパターンを先に置く
+// (?<![\d-]) と (?![\d-]) は「前後に数字もハイフンも無い」という
+// 条件で、長い番号の途中から一致しないようにする。
+// maskPII() は上から順に置き換えるため、
+// 重なる場合に備えて長い番号のパターンを先に置く
 // （g を付けないと、それぞれ最初の 1 件しか置き換えない）
 const PII_PATTERNS = {
   creditCard: /(?<![\d-])\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}(?![\d-])/g,
@@ -36,7 +37,7 @@ export function createPIIMaskProcessor() {
       pattern,
       replacement: `[${type.toUpperCase()}_MASKED]`,
     })),
-    strategy: 'redact', // 一致した部分を置き換える（既定の block は中断）
+    strategy: 'redact', // 一致部分を置き換える（既定の block は中断）
     phase: 'input', // 入力だけを対象にする（既定の all は出力も対象）
   });
 }
