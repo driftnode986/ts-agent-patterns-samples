@@ -7,13 +7,21 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "4.0.82",
     "@mastra/core": "1.78.0",
+    "@mastra/langfuse": "1.6.1",
+    "@mastra/libsql": "1.26.2",
     "@mastra/observability": "1.20.1",
     "@mastra/otel-bridge": "1.5.17",
+    "@mastra/otel-exporter": "1.4.8",
     "@opentelemetry/auto-instrumentations-node": "0.81.2",
     "@opentelemetry/exporter-trace-otlp-proto": "0.223.0",
     "@opentelemetry/sdk-node": "0.223.0",
     "@opentelemetry/sdk-trace-base": "2.12.0",
     "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@opentelemetry/api": "1.9.1",
+    "ai": "7.0.143"
   }
 }

@@ -1,3 +1,4 @@
+// #region scorer-analyze
 // src/evals/quality-scorer.ts
 import { createScorer } from '@mastra/core/evals';
 import { z } from 'zod';
@@ -22,6 +23,8 @@ export const qualityScorer = createScorer({
 "${run.output.text}"
 `,
   })
+  // #endregion
+  // #region scorer-score
   .generateScore(({ results }) => {
     const { isAccurate, coverage } = results.analyzeStepResult;
     return isAccurate ? coverage : 0;
@@ -33,3 +36,4 @@ export const qualityScorer = createScorer({
 分析結果: ${JSON.stringify(results.analyzeStepResult)}
 `,
   });
+// #endregion

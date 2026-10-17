@@ -1,11 +1,19 @@
+// #region search-imports
 // src/mastra/workflows/steps/search.ts
+import { createStep } from '@mastra/core/workflows';
+import { SpanType } from '@mastra/core/observability';
+import { z } from 'zod';
+import { db } from '../../../lib/db';
+// #endregion
+
+// #region search-step
 export const searchStep = createStep({
   id: 'search',
   inputSchema: z.object({ query: z.string() }),
   outputSchema: z.object({ results: z.array(z.string()) }),
-  execute: async ({ inputData, context }) => {
-    const dbSpan = context?.tracingContext.currentSpan?.createChildSpan({
-      type: 'generic',
+  execute: async ({ inputData, tracingContext }) => {
+    const dbSpan = tracingContext?.currentSpan?.createChildSpan({
+      type: SpanType.GENERIC,
       name: 'database-query',
       input: { query: inputData.query },
     });
@@ -19,10 +27,11 @@ export const searchStep = createStep({
       return { results };
     } catch (error) {
       dbSpan?.error({
-        error,
+        error: error instanceof Error ? error : new Error(String(error)),
         metadata: { retryable: true },
       });
       throw error;
     }
   },
 });
+// #endregion
