@@ -26,3 +26,8 @@ coverage/
 
 # Mastra runtime
 .mastra/
+
+# Local databases created by the samples and tests
+*.db
+*.db-shm
+*.db-wal

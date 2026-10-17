@@ -1,118 +1,88 @@
 # ts-agent-patterns-samples
 
-「**Mastra ではじめる TypeScript AI エージェント実装 — Vercel AI SDK・Cloudflare Agents との比較で学ぶ本番運用パターン**」（牧野 誠 著）のサンプルコード集です。
+『**Mastra ではじめる TypeScript AI エージェント実装 — Vercel AI SDK・Cloudflare Agents との比較で学ぶ本番運用パターン**』のサンプルコードです。
 
-本書の各章で登場するコードをそのまま動かせる形で収録しています。
+本に載っているコードは、すべてこの repo のファイルから差し込んでいます。各章のコードは型チェックとテストで動作を確かめています（全章で 170 件。テストは偽のモデルを使うので、API キー無しで通ります）。
 
 Kindle 版: [Mastra ではじめる TypeScript AI エージェント実装](https://www.amazon.co.jp/dp/B0GX38ZD9F)
 
 ## 動作環境
 
-- **Node.js** v22 LTS 以上
-- **TypeScript** 5.8+
-- **npm** (pnpm / yarn でも可)
+- **Node.js** 22 以上
+- **npm**（npm workspaces を使います）
 - **OS** macOS / Linux / WSL2
 
-Ch4 (RAG) と Ch8 (Semantic Cache) では PostgreSQL + pgvector 拡張が必要です。ローカル開発では LibSQL (SQLite) のみで動作します。
+第4章の本番構成と第8章の Semantic Cache は PostgreSQL + pgvector、第8章のキャッシュは Redis を使います。テストでは、どちらもメモリ上の偽物か LibSQL（SQLite）で置き換えています。
 
 ## セットアップ
 
 ```bash
 git clone https://github.com/driftnode986/ts-agent-patterns-samples.git
 cd ts-agent-patterns-samples
-npm install
-cp .env.example .env
+npm install            # 全章の依存が一度に入ります（npm workspaces）
+cp .env.example .env   # 実際にエージェントを動かすときに API キーを書きます
 ```
 
-`.env` を開いて API キーを設定してください。
+## 動作の確かめ方
+
+```bash
+npm run typecheck      # 全章の型チェック
+npm test               # 全章のテスト
+
+cd ch05-workflow       # 1つの章だけ
+npm run typecheck && npm test
+```
 
 ## 環境変数
 
-| 変数名 | 用途 | 必須 |
-|--------|------|------|
-| `ANTHROPIC_API_KEY` | Claude API (全章共通) | 必須 |
-| `OPENAI_API_KEY` | OpenAI API (Ch7 比較用) | Ch7 のみ |
-| `LANGFUSE_PUBLIC_KEY` | Langfuse 観測性 (Ch6) | Ch6 のみ |
-| `LANGFUSE_SECRET_KEY` | Langfuse 観測性 (Ch6) | Ch6 のみ |
-| `LANGFUSE_BASEURL` | Langfuse エンドポイント | Ch6 のみ |
+`.env.example` に、使う章と一緒に書いてあります。テスト（`npm test`）にはどれも不要です。
 
-## 対応 SDK バージョン (執筆時 2026-05)
+- `ANTHROPIC_API_KEY` — Claude（全章）
+- `OPENAI_API_KEY` — 埋め込み（第4章・第8章）、別のモデルへの切り替え（第2・3・8章）、OpenAI Agents（第1章・第7章）
+- `LANGFUSE_PUBLIC_KEY` / `LANGFUSE_SECRET_KEY` / `LANGFUSE_BASE_URL` — Langfuse（第6章）
+- `DATABASE_URL` — PostgreSQL + pgvector（第4章・第8章）
+- `REDIS_URL` — Redis（第8章）
+- `GITHUB_TOKEN` — GitHub の MCP サーバー（第3章）
 
-| SDK | バージョン | 該当章 |
-|-----|-----------|--------|
-| Mastra | `@mastra/core@1.35.0` | 全章 |
-| Vercel AI SDK | `ai@6.0+` / `@ai-sdk/anthropic@3.0+` | Ch1, Ch7 |
-| Cloudflare Agents | `agents@0.13.2` | Ch1, Ch7 |
-| Claude Agent SDK | `@anthropic-ai/claude-agent-sdk@0.3.150` | Ch1, Ch7 |
-| OpenAI Agents JS | `@openai/agents@0.11.5` | Ch1, Ch7 |
+## 動作確認した版（2026-10）
+
+各章の `package.json` に版を固定しています。主なもの:
+
+- Mastra `@mastra/core` 1.78.0（`@mastra/memory` 1.38.0 / `@mastra/libsql` 1.26.2 / `@mastra/pg` 1.31.2 / `@mastra/mcp` 2.4.1 / `@mastra/observability` 1.20.1）
+- Vercel AI SDK `ai` 7.0.143 / `@ai-sdk/anthropic` 4.0.82 / `@ai-sdk/openai` 4.0.96 / `@ai-sdk/react` 4.0.147
+- Cloudflare Agents `agents` 0.28.1
+- Claude Agent SDK `@anthropic-ai/claude-agent-sdk` 0.3.302
+- OpenAI Agents JS `@openai/agents` 0.20.0
+- `zod` 4.6.7 / `typescript` 6.0.3 / `vitest` 5.0.5
 
 ## ディレクトリ構成
 
 ```
 ts-agent-patterns-samples/
-├── ch01-landscape/        第1章  5 SDK の見取り図
-│   └── 5 SDK の Hello World、3 レイヤー分類
-├── ch02-mastra-setup/     第2章  Mastra 環境構築
-│   └── プロジェクト作成、Agent 定義、Tool 追加、LibSQL 初期化
-├── ch03-agent-tools/      第3章  Agent + Tools + Model Router
-│   └── Zod スキーマ、Subagent、MCP 接続、Model Router、テスト
-├── ch04-memory-rag/       第4章  Memory + RAG
-│   └── Message History、Working Memory、Semantic Recall、pgvector RAG
-├── ch05-workflow/         第5章  Workflow
-│   └── 制御フロー、Suspend & Resume、Saga パターン、State 管理
-├── ch06-observability/    第6章  観測性
-│   └── Langfuse 連携、OpenTelemetry、コスト可視化、PII マスキング
-├── ch07-sdk-comparison/   第7章  SDK 比較実践
-│   └── Vercel AI SDK / Cloudflare / Claude SDK / OpenAI Agents の実装比較
-├── ch08-production/       第8章  本番運用
-│   └── Retry、Circuit Breaker、RBAC、Cost Cap、デプロイ戦略
-├── .env.example           環境変数テンプレート
-├── package.json           依存パッケージ一覧
-└── tsconfig.json          TypeScript 設定
+├── ch01-landscape/          第1章  5 SDK の見取り図（SDK ごとのフォルダ）
+│   ├── vercel-ai-sdk/  mastra/  cloudflare-agents/  claude-agent-sdk/  openai-agents/
+├── ch02-mastra-setup/       第2章  Mastra 環境構築
+├── ch03-agent-tools/        第3章  Agent + Tools + Model Router
+├── ch04-memory-rag/         第4章  Memory + RAG
+├── ch05-workflow/           第5章  Workflow
+├── ch06-observability/      第6章  観測性
+├── ch07-sdk-comparison/     第7章  SDK 比較実践（SDK ごとのフォルダ）
+│   ├── vercel-ai-sdk/  cloudflare-agents/  mastra-cloudflare/
+│   ├── claude-agent-sdk/  openai-agents/  mastra-wrapper/
+├── ch08-production/         第8章  本番運用
+├── appendix-b-branded-types/ 付録B  TypeScript Branded Types
+├── .env.example
+├── package.json             npm workspaces（全章）
+└── tsconfig.base.json       全章共通の TypeScript 設定
 ```
+
+各章の README に、本の節とファイルの対応を書いています。
 
 ## 本書に含まれないもの
 
-- **フロントエンド UI**: 本書はバックエンド (Agent / Workflow / Observability) に集中しています。React / Next.js のフロントエンドは Ch7 で `useChat` フックの例示のみです
-- **Python サンプル**: 本書は TypeScript ネイティブ実装が前提です
-- **LangChain.js / LangGraph**: 本書のスコープ外です (Ch1 で不採用の理由を説明)
-
-## 章ごとの実行方法
-
-各章のディレクトリに README があり、実行手順を記載しています。基本パターンは以下のとおりです。
-
-```bash
-# テスト実行
-npx vitest run ch03-agent-tools/
-
-# 特定のサンプルを直接実行
-npx tsx ch02-mastra-setup/src/scripts/chat.ts
-```
-
-## 主要な依存パッケージ
-
-### Mastra エコシステム
-
-- `@mastra/core` — フレームワーク本体 (Agent, Tool, Workflow)
-- `@mastra/memory` — Memory (Message History, Working Memory, Semantic Recall)
-- `@mastra/libsql` — LibSQL ストレージ (開発用)
-- `@mastra/pg` — PostgreSQL ストレージ (本番用)
-- `@mastra/mcp` — MCP クライアント
-- `@mastra/langfuse` — Langfuse 連携
-- `@mastra/observability` — OpenTelemetry 統合
-
-### AI SDK
-
-- `ai` — Vercel AI SDK コア
-- `@ai-sdk/anthropic` — Claude プロバイダ
-- `@ai-sdk/openai` — OpenAI プロバイダ
-- `@ai-sdk/google` — Google Gemini プロバイダ
-
-### ユーティリティ
-
-- `zod` — スキーマバリデーション (全章で使用)
-- `cockatiel` — Retry / Circuit Breaker (Ch8)
-- `vitest` — テストフレームワーク
+- **フロントエンド UI**: 本書はバックエンド（Agent / Workflow / 観測性）が中心です。React / Next.js は第7章の `useChat` の例だけです
+- **Python のサンプル**: TypeScript だけで書いています
+- **LangChain.js / LangGraph**: 本書の範囲外です（第1章で理由を説明しています）
 
 ## ライセンス
 
