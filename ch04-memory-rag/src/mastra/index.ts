@@ -16,7 +16,7 @@ export const memory = new Memory({
   }),
   embedder: 'openai/text-embedding-3-small',
   options: {
-    lastMessages: 20,
+    messageHistory: { maxTokens: 8000 },
     semanticRecall: {
       topK: 3,
       messageRange: { before: 2, after: 1 },

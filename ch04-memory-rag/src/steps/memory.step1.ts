@@ -35,7 +35,7 @@ export const memory = new Memory({
     url: 'file:./memory.db',
   }),
   options: {
-    lastMessages: 20,
+    messageHistory: { maxTokens: 8000 },
     workingMemory: {
       enabled: true,
       template,

@@ -10,7 +10,7 @@ const memory = new Memory({
     url: 'file:./memory.db',
   }),
   options: {
-    lastMessages: 20,
+    messageHistory: { maxTokens: 8000 },
   },
 });
 
