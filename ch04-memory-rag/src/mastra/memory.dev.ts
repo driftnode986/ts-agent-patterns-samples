@@ -1,7 +1,8 @@
 // src/mastra/memory.dev.ts
+import { Memory } from '@mastra/memory';
 import { LibSQLStore, LibSQLVector } from '@mastra/libsql';
 
-const memory = new Memory({
+export const memory = new Memory({
   storage: new LibSQLStore({
     id: 'dev-storage',
     url: 'file:./memory.db',

@@ -10,6 +10,7 @@ export function chunkDocument(text: string, options: {
   while (start < text.length) {
     const end = Math.min(start + maxChunkSize, text.length);
     chunks.push(text.slice(start, end));
+    if (end === text.length) break;
     start += maxChunkSize - overlap;
   }
 

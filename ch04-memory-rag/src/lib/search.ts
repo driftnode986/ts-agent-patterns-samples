@@ -15,10 +15,10 @@ export async function searchKnowledgeBase(query: string) {
   });
 
   const results = await pgVector.query({
-    indexName: 'knowledge-base',
+    indexName: 'knowledge_base',
     queryVector: embedding,
     topK: 5,
   });
 
-  return results.map(r => r.metadata.text);
+  return results.map((r) => String(r.metadata?.text ?? ''));
 }

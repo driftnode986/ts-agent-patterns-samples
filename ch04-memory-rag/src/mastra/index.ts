@@ -1,10 +1,11 @@
+// #region memory
 // src/mastra/index.ts
 import { Mastra } from '@mastra/core';
 import { Memory } from '@mastra/memory';
 import { LibSQLStore, LibSQLVector } from '@mastra/libsql';
-import { supportAgent } from './agents';
+import { supportAgent } from './agents/support';
 
-const memory = new Memory({
+export const memory = new Memory({
   storage: new LibSQLStore({
     id: 'app-storage',
     url: 'file:./memory.db',
@@ -25,7 +26,10 @@ const memory = new Memory({
     },
   },
 });
+// #endregion
 
+// #region mastra
 export const mastra = new Mastra({
   agents: { supportAgent },
 });
+// #endregion

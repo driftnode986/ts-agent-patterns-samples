@@ -1,4 +1,22 @@
 // src/scripts/index-chunked-documents.ts
+// #region setup
+import fs from 'node:fs/promises';
+import { embed } from 'ai';
+import { PgVector } from '@mastra/pg';
+import { ModelRouterEmbeddingModel } from '@mastra/core/llm';
+import { chunkDocument } from '../lib/chunker';
+
+const pgVector = new PgVector({
+  id: 'knowledge-vector',
+  connectionString: process.env.DATABASE_URL!,
+});
+await pgVector.createIndex({
+  indexName: 'knowledge_base',
+  dimension: 1536,
+});
+// #endregion
+
+// #region chunk-and-index
 const fullDocument = await fs.readFile('docs/user-guide.md', 'utf-8');
 const chunks = chunkDocument(fullDocument, {
   maxChunkSize: 1000,
@@ -13,15 +31,14 @@ for (let i = 0; i < chunks.length; i++) {
   });
 
   await pgVector.upsert({
-    indexName: 'knowledge-base',
-    vectors: [{
-      id: `doc-guide-chunk-${i}`,
-      vector: embedding,
-      metadata: {
-        text: chunks[i],
-        source: 'user-guide.md',
-        chunkIndex: i,
-      },
+    indexName: 'knowledge_base',
+    vectors: [embedding],
+    ids: [`doc-guide-chunk-${i}`],
+    metadata: [{
+      text: chunks[i],
+      source: 'user-guide.md',
+      chunkIndex: i,
     }],
   });
 }
+// #endregion

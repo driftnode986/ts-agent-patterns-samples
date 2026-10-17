@@ -15,7 +15,7 @@ export async function searchTenantDocs(query: string, tenantId: string) {
   });
 
   const results = await pgVector.query({
-    indexName: 'tenant-knowledge-base',
+    indexName: 'tenant_knowledge_base',
     queryVector: embedding,
     topK: 5,
     filter: {
@@ -23,5 +23,5 @@ export async function searchTenantDocs(query: string, tenantId: string) {
     },
   });
 
-  return results.map(r => r.metadata.text);
+  return results.map((r) => String(r.metadata?.text ?? ''));
 }

@@ -5,9 +5,13 @@ import { searchKnowledgeBase } from '../../lib/search';
 
 export const searchDocsTool = createTool({
   id: 'search-docs',
-  description: '社内ドキュメント (ユーザーガイド、API リファレンス、FAQ) から関連情報を検索します。ユーザーの質問に直接答えられない場合に使ってください',
+  description:
+    '社内ドキュメント (ユーザーガイド、API リファレンス、FAQ) から'
+    + '関連情報を検索します。'
+    + 'ユーザーの質問に直接答えられない場合に使ってください',
   inputSchema: z.object({
-    query: z.string().describe('検索クエリ (ユーザーの質問を自然文でそのまま渡す)'),
+    query: z.string()
+      .describe('検索クエリ (ユーザーの質問を自然文でそのまま渡す)'),
   }),
   outputSchema: z.object({
     results: z.array(z.string()).describe('関連ドキュメントのテキスト'),

@@ -1,3 +1,4 @@
+// #region setup
 // src/scripts/index-documents.ts
 import { embed } from 'ai';
 import { PgVector } from '@mastra/pg';
@@ -8,9 +9,23 @@ const pgVector = new PgVector({
   connectionString: process.env.DATABASE_URL!,
 });
 
+// text-embedding-3-small のベクトルは 1536 次元
+await pgVector.createIndex({
+  indexName: 'knowledge_base',
+  dimension: 1536,
+});
+// #endregion
+
+// #region embed-and-upsert
 const documents = [
-  { id: 'doc-1', text: 'Mastra の Agent は instructions でシステムプロンプトを定義します...' },
-  { id: 'doc-2', text: 'Tool は createTool 関数で定義し、Zod スキーマで入出力を固定します...' },
+  {
+    id: 'doc-1',
+    text: 'Mastra の Agent は instructions でシステムプロンプトを定義します',
+  },
+  {
+    id: 'doc-2',
+    text: 'Tool は createTool 関数で定義し、Zod スキーマで入出力を固定します',
+  },
 ];
 
 for (const doc of documents) {
@@ -20,11 +35,10 @@ for (const doc of documents) {
   });
 
   await pgVector.upsert({
-    indexName: 'knowledge-base',
-    vectors: [{
-      id: doc.id,
-      vector: embedding,
-      metadata: { text: doc.text },
-    }],
+    indexName: 'knowledge_base',
+    vectors: [embedding],
+    ids: [doc.id],
+    metadata: [{ text: doc.text }],
   });
 }
+// #endregion

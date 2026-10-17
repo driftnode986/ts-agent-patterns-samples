@@ -1,9 +1,10 @@
 // src/mastra/memory.prod.ts
-import { PostgresStorage } from '@mastra/pg';
-import { PgVector } from '@mastra/pg';
+import { Memory } from '@mastra/memory';
+import { PostgresStore, PgVector } from '@mastra/pg';
 
-const memory = new Memory({
-  storage: new PostgresStorage({
+export const memory = new Memory({
+  storage: new PostgresStore({
+    id: 'pg-storage',
     connectionString: process.env.DATABASE_URL!,
   }),
   vector: new PgVector({
