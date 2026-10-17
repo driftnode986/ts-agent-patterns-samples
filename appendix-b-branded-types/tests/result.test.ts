@@ -44,6 +44,20 @@ describe('searchDocuments (Result 型)', () => {
     });
   });
 
+  it('AbortSignal.timeout() で打ち切った検索は timeout', async () => {
+    // 応答しない検索先。signal が打ち切られたら、その理由で失敗する
+    vi.spyOn(vectorStore, 'search').mockImplementation(
+      (_query, signal) =>
+        new Promise((_resolve, reject) => {
+          signal?.addEventListener('abort', () => reject(signal.reason));
+        }),
+    );
+    expect(await searchDocuments('Mastra', 10)).toEqual({
+      ok: false,
+      error: { type: 'timeout' },
+    });
+  });
+
   it('それ以外の例外は unknown (timeout にまとめない)', async () => {
     vi.spyOn(vectorStore, 'search').mockRejectedValue(new Error('boom'));
     expect(await searchDocuments('Mastra')).toEqual({

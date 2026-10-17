@@ -15,7 +15,9 @@ const documents = [
 ];
 
 export const vectorStore = {
-  async search(query: string): Promise<string[]> {
+  // 本番のベクトルストアでは、signal を HTTP リクエストに渡す
+  async search(query: string, signal?: AbortSignal): Promise<string[]> {
+    signal?.throwIfAborted();
     return documents.filter((doc) => doc.includes(query));
   },
 };

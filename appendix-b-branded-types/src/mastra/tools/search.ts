@@ -9,12 +9,14 @@ export type SearchError =
 
 export async function searchDocuments(
   query: string,
+  timeoutMs = 5000,
 ): Promise<Result<string[], SearchError>> {
   if (!query.trim()) {
     return failure({ type: 'invalid_query', message: 'Empty query' });
   }
   try {
-    return success(await vectorStore.search(query));
+    const signal = AbortSignal.timeout(timeoutMs);
+    return success(await vectorStore.search(query, signal));
   } catch (e) {
     if (isRateLimitError(e)) {
       return failure({ type: 'rate_limit', retryAfter: e.retryAfter });
