@@ -27,10 +27,12 @@ npm test            # テスト（偽のモデルを使うので API キー無�
 - **8.6 Cache-Aside と Semantic Cache　LLM 応答のキャッシュ戦略**
   - `src/lib/cache.ts`
   - `src/lib/db.ts`
+  - `sql/llm_cache.sql`
   - `src/lib/semantic-cache.ts`
 - **8.7 Human-in-the-Loop　重要判断は人間承認**
   - `src/mastra/workflows/approval-workflow.ts`
   - `src/mastra/index.ts`
+  - `src/scripts/approve-refund.ts`
 - **8.8 Okta SSO 連携と RBAC　Agent 単位のアクセス制御**
   - `src/lib/session.ts`
   - `src/middleware/rbac.ts`

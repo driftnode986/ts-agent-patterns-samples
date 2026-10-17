@@ -12,6 +12,13 @@ npm run typecheck   # 型チェック
 npm test            # テスト（偽のモデルを使うので API キー無しで通ります）
 ```
 
+Mastra Studio（ブラウザで開く開発用の画面）を起動するには、repo 直下の `.env` に API キーを書いてから:
+
+```bash
+cd ch02-mastra-setup
+npm run dev         # http://localhost:4111 で開きます（ポートを変えるなら PORT=4222 npm run dev）
+```
+
 ## 本の節とファイル
 
 - **2.3 環境変数を設定する**
