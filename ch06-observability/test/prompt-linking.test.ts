@@ -27,26 +27,26 @@ vi.stubGlobal('fetch', async (input: string | URL | Request) => {
 vi.stubEnv('LANGFUSE_PUBLIC_KEY', 'pk-lf-test');
 vi.stubEnv('LANGFUSE_SECRET_KEY', 'sk-lf-test');
 
-const { supportAgent } = await import(
+const { promptLinkedAgent } = await import(
   '../src/mastra/agents/prompt-linked-agent'
 );
 
 describe('Langfuse Prompt Linking', () => {
   it('Langfuse のプロンプトを instructions に使う', async () => {
     expect(requests[0]).toContain('/api/public/v2/prompts/customer-support');
-    expect(await supportAgent.getInstructions())
+    expect(await promptLinkedAgent.getInstructions())
       .toBe('あなたは丁寧なサポート担当です。');
   });
 
   it('プロンプトの名前と版をトレースに残す', async () => {
     const exporter = new TestExporter();
     new Mastra({
-      agents: { supportAgent },
+      agents: { promptLinkedAgent },
       observability: new Observability({
         configs: { test: { serviceName: 'test', exporters: [exporter] } },
       }),
     });
-    await supportAgent.generate('返品したい');
+    await promptLinkedAgent.generate('返品したい');
     await exporter.flush();
     const generation = exporter
       .getAllSpans()

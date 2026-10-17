@@ -12,7 +12,7 @@ const prompt = await exporter.client.prompt.get(
   { type: 'text' }
 );
 
-export const supportAgent = new Agent({
+export const promptLinkedAgent = new Agent({
   id: 'support-agent',
   name: 'support-agent',
   instructions: prompt.compile(),

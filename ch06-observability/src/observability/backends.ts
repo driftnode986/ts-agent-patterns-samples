@@ -1,10 +1,12 @@
 // src/observability/backends.ts
+// #region imports
 import {
   Observability,
   MastraStorageExporter,
 } from '@mastra/observability';
 import { LangfuseExporter } from '@mastra/langfuse';
 import { OtelExporter } from '@mastra/otel-exporter';
+// #endregion
 
 // OTel 互換バックエンドへ送る (6.11)
 // #region otel-exporter

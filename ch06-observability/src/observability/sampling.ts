@@ -1,9 +1,11 @@
 // src/observability/sampling.ts
+// #region imports
 import {
   Observability,
   SamplingStrategyType,
 } from '@mastra/observability';
 import { LangfuseExporter } from '@mastra/langfuse';
+// #endregion
 
 // 本番は 10% だけ記録する (6.10)
 // #region sampling-ratio

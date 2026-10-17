@@ -1,10 +1,12 @@
 // src/observability/configs.ts
+// #region imports
 import {
   Observability,
   SensitiveDataFilter,
 } from '@mastra/observability';
 import { LangfuseExporter } from '@mastra/langfuse';
 import { PiiRedactor } from './pii-redactor';
+// #endregion
 
 // requestContext の値をスパン属性に自動で追加する (6.6)
 // #region request-context-keys
