@@ -14,5 +14,5 @@ export const gptModel = openai('gpt-4o');
 // #region google
 // Google Gemini
 import { google } from '@ai-sdk/google';
-export const geminiModel = google('gemini-2.0-flash');
+export const geminiModel = google('gemini-2.5-flash');
 // #endregion

@@ -83,7 +83,7 @@ describe('models', () => {
     vi.stubEnv('GOOGLE_GENERATIVE_AI_API_KEY', 'test');
     const m = await import('../src/mastra/models');
     expect(m.gptModel.modelId).toBe('gpt-4o');
-    expect(m.geminiModel.modelId).toBe('gemini-2.0-flash');
+    expect(m.geminiModel.modelId).toBe('gemini-2.5-flash');
     expect(m.claudeModel.modelId).toBe('claude-sonnet-4-6');
   });
 });
