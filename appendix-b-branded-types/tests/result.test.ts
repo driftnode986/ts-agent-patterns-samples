@@ -34,11 +34,21 @@ describe('searchDocuments (Result 型)', () => {
     });
   });
 
-  it('その他の例外は timeout', async () => {
-    vi.spyOn(vectorStore, 'search').mockRejectedValue(new Error('boom'));
+  it('TimeoutError は timeout', async () => {
+    vi.spyOn(vectorStore, 'search').mockRejectedValue(
+      new DOMException('The operation timed out.', 'TimeoutError'),
+    );
     expect(await searchDocuments('Mastra')).toEqual({
       ok: false,
       error: { type: 'timeout' },
+    });
+  });
+
+  it('それ以外の例外は unknown (timeout にまとめない)', async () => {
+    vi.spyOn(vectorStore, 'search').mockRejectedValue(new Error('boom'));
+    expect(await searchDocuments('Mastra')).toEqual({
+      ok: false,
+      error: { type: 'unknown', message: 'Error: boom' },
     });
   });
 });
@@ -50,15 +60,18 @@ describe('answerSearch (ナローイング)', () => {
 
   it('エラーの種類ごとにメッセージを返す', async () => {
     expect(await answerSearch('')).toBe('クエリが不正です: Empty query');
-    vi.spyOn(vectorStore, 'search').mockRejectedValueOnce(new Error('x'));
+    vi.spyOn(vectorStore, 'search').mockRejectedValueOnce(
+      new DOMException('timed out', 'TimeoutError'),
+    );
     expect(await answerSearch('a')).toBe('タイムアウトしました。再試行してください。');
+    vi.spyOn(vectorStore, 'search').mockRejectedValueOnce(new Error('x'));
+    expect(await answerSearch('a')).toBe('検索に失敗しました: Error: x');
   });
 
-  it('レート制限では retryAfter 秒待ってから返す', async () => {
-    vi.useFakeTimers();
+  it('レート制限では待たずに、再試行までの秒数を返す', async () => {
     vi.spyOn(vectorStore, 'search').mockRejectedValue(new RateLimitError(2));
-    const pending = answerSearch('Mastra');
-    await vi.advanceTimersByTimeAsync(2000);
-    expect(await pending).toBe('レート制限中です。しばらくお待ちください。');
+    expect(await answerSearch('Mastra')).toBe(
+      'レート制限中です。2 秒後に再試行してください。',
+    );
   });
 });

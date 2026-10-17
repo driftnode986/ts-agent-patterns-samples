@@ -71,6 +71,21 @@ describe('Phantom Types', () => {
     expect(cost).toBe(1050);
     expectTypeOf<Tokens>().not.toMatchTypeOf<UsdCents>();
   });
+
+  it('検出できる取り違えと、検出できない取り違え (B.6)', () => {
+    const tokens = 100 as Tokens;
+    const cents = 100 as UsdCents;
+    // 引数の取り違えはコンパイルエラー
+    // @ts-expect-error UsdCents は Tokens の引数に渡せない
+    calculateCost(cents, tokens, cents, cents);
+    // === での比較もコンパイルエラー (TS2367)
+    // @ts-expect-error Tokens と UsdCents は比較できない型
+    const same = tokens === cents;
+    // 大小比較と四則演算は number として通ってしまう
+    const larger = tokens > cents;
+    const sum = tokens + cents;
+    expect([same, larger, sum]).toEqual([true, false, 200]);
+  });
 });
 
 describe('Readonly', () => {

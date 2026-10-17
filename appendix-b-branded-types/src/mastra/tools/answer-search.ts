@@ -1,5 +1,4 @@
 // src/mastra/tools/answer-search.ts
-import { setTimeout as sleep } from 'node:timers/promises';
 import { searchDocuments } from './search';
 
 export async function answerSearch(query: string): Promise<string> {
@@ -8,13 +7,16 @@ export async function answerSearch(query: string): Promise<string> {
 
   if (!result.ok) {
     switch (result.error.type) {
-      case 'rate_limit':
-        await sleep(result.error.retryAfter * 1000);
-        return 'レート制限中です。しばらくお待ちください。';
+      case 'rate_limit': {
+        const sec = result.error.retryAfter;
+        return `レート制限中です。${sec} 秒後に再試行してください。`;
+      }
       case 'invalid_query':
         return `クエリが不正です: ${result.error.message}`;
       case 'timeout':
         return 'タイムアウトしました。再試行してください。';
+      case 'unknown':
+        return `検索に失敗しました: ${result.error.message}`;
     }
   }
 
