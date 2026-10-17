@@ -12,8 +12,8 @@ const prompt = await exporter.client.prompt.get(
 );
 
 export const promptLinkedAgent = new Agent({
-  id: 'support-agent',
-  name: 'support-agent',
+  id: 'prompt-linked-agent',
+  name: 'prompt-linked-agent',
   instructions: prompt.compile(),
   model: anthropic('claude-sonnet-4-6'),
   defaultOptions: {

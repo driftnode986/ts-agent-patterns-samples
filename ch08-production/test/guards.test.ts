@@ -59,6 +59,12 @@ describe('PII のマスク', () => {
     expect(maskPII(input)).toBe(masked);
   });
 
+  // 前後の条件が無いと、先頭 16 桁がカード番号として伏せられ 7 が残る
+  it('17 桁の数字の並びは途中から伏せない', () => {
+    const order = '注文 12345678901234567';
+    expect(maskPII(order)).toBe(order);
+  });
+
   it.each(overlapping)(
     '入力プロセッサも $input を $masked にする',
     async ({ input, masked }) => {
