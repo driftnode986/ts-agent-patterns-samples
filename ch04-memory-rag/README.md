@@ -1,72 +1,56 @@
-# ch04 - Mastra Memory と RAG
+# ch04-memory-rag
 
-Agent に記憶を持たせる 3 つの方法 (Message History / Working Memory / Semantic Recall) と、外部ドキュメントを検索する RAG パイプラインの構築。LibSQL (開発) から PostgreSQL + pgvector (本番) への移行パターンも扱います。
+本書の「第4章 Mastra Memory と RAG　状態保持から知識検索まで」のサンプルコードです。本に載っているコードは、すべてこのディレクトリのファイルから差し込んでいます。
 
-## 本書の該当節
+## 動かし方
 
-- 4.1 Memory の必要性 — `src/mastra/index.ts`
-- 4.2 Message History — `src/mastra/agents/support.ts`, `src/scripts/chat.ts`
-- 4.3 Working Memory — テンプレートによる構造化情報の永続保持
-- 4.4 バックエンド移行 — LibSQL (dev) → PostgreSQL (prod)
-- 4.6 Semantic Recall — ベクトル検索による関連メッセージ取得
-- 4.7 GDPR 対応 — `src/scripts/gdpr-delete.ts`
-- 4.8 RAG 基礎 — `src/scripts/index-documents.ts`, `src/lib/search.ts`
-- 4.9 チャンク分割 — `src/lib/chunker.ts`
-- 4.10 RAG as Tool — `src/mastra/tools/search-docs.ts`, `src/mastra/agents/docs-agent.ts`
-- 4.11 RAG 精度評価 — `src/scripts/eval-rag.ts`
-- 4.13 Multi-tenant スコープ — `src/lib/search-tenant.ts`
-
-## SDK バージョン
-
-- Mastra `@mastra/core@1.35.0`
-- `@mastra/memory`
-- `@mastra/libsql` (開発用)
-- `@mastra/pg` + pgvector (本番用)
-
-## 前提条件
-
-- `@mastra/memory`
-- `@mastra/libsql` (開発) または `@mastra/pg` + pgvector (本番)
-- `ANTHROPIC_API_KEY` 環境変数
-
-## セットアップ
+repo の直下で一度 `npm install` してから（npm workspaces で全章の依存が入ります）:
 
 ```bash
-npm install
-cp .env.example .env
-# .env に ANTHROPIC_API_KEY を設定
+cd ch04-memory-rag
+npm run typecheck   # 型チェック
+npm test            # テスト（偽のモデルを使うので API キー無しで通ります）
 ```
 
-## 構成
+## 本の節とファイル
 
-- `src/mastra/index.ts` — Mastra + Memory + LibSQL 設定
-- `src/mastra/agents/support.ts` — Message History 付き Agent
-- `src/mastra/agents/docs-agent.ts` — RAG Tool 統合 Agent
-- `src/mastra/tools/search-docs.ts` — RAG 検索 Tool
-- `src/lib/search.ts` — searchKnowledgeBase() ベクトル検索
-- `src/lib/chunker.ts` — ドキュメントチャンク分割
-- `src/lib/search-tenant.ts` — マルチテナント検索 (metadata フィルタ)
-- `src/scripts/chat.ts` — Agent 対話 (threadId / resourceId)
-- `src/scripts/index-documents.ts` — ドキュメント embedding + pgvector 登録
-- `src/scripts/gdpr-delete.ts` — GDPR 個人データ削除
-- `src/scripts/eval-rag.ts` — RAG 精度評価 (Faithfulness / Context Precision)
+- **4.1 なぜ Agent に Memory が必要か**
+  - `src/mastra/index.ts`
+- **4.2 Message History　チャット履歴の保持**
+  - `src/mastra/agents/support.ts`
+  - `src/steps/chat.step1.ts`
+- **4.3 Working Memory　構造化された情報の永続保持**
+  - `src/steps/memory.step1.ts`
+- **4.4 Memory バックエンド　LibSQL から Postgres への移行**
+  - `src/mastra/memory.dev.ts`
+  - `src/mastra/memory.prod.ts`
+- **4.5 Memory のスコープと書き込み戦略**
+  - `src/scripts/chat.ts`
+- **4.6 Semantic Recall　過去の会話から関連情報を検索する**
+  - `src/mastra/memory.ts`
+- **4.7 GDPR / 個人情報削除への対応**
+  - `src/scripts/gdpr-delete.ts`
+- **4.8 RAG の基礎　pgvector 連携と embedding 戦略**
+  - `src/scripts/index-documents.ts`
+  - `src/lib/search.ts`
+- **4.9 チャンク分割とベクトル検索**
+  - `src/lib/chunker.ts`
+  - `src/scripts/index-chunked-documents.ts`
+- **4.10 Tool として RAG を使うパターン**
+  - `src/mastra/tools/search-docs.ts`
+  - `src/mastra/agents/docs-agent.ts`
+- **4.11 RAG の精度評価**
+  - `src/scripts/eval-rag.ts`
+- **4.13 Multi-tenant SaaS での document スコープ管理**
+  - `src/lib/search-tenant.ts`
+  - `src/scripts/index-tenant-documents.ts`
 
-## 実行方法
+## 主な依存（版は package.json に固定）
 
-```bash
-npx vitest run ch04-memory-rag/
-npx tsx ch04-memory-rag/src/scripts/chat.ts
-npx tsx ch04-memory-rag/src/scripts/index-documents.ts
-npx tsx ch04-memory-rag/src/scripts/eval-rag.ts
-```
-
-## トピック
-
-- Memory の 3 種類: Message History (チャット履歴)、Working Memory (構造化情報)、Semantic Recall (ベクトル検索)
-- threadId / resourceId によるセッション分離
-- LibSQL (開発) → PostgreSQL + pgvector (本番) のバックエンド移行
-- RAG パイプライン: Indexing → Retrieval → Generation の 3 ステップ
-- ドキュメントチャンク分割とオーバーラップ戦略
-- RAG as Tool パターン: Agent が検索 Tool を自律的に呼び出す
-- GDPR / 個人情報削除ワークフロー
-- RAG 精度評価指標 (Faithfulness, Context Precision, Context Recall)
+- `@ai-sdk/anthropic` 4.0.82
+- `@mastra/core` 1.78.0
+- `@mastra/libsql` 1.26.2
+- `@mastra/memory` 1.38.0
+- `@mastra/pg` 1.31.2
+- `ai` 7.0.143
+- `zod` 4.6.7

@@ -1,61 +1,42 @@
-# ch02 - Mastra 環境構築
+# ch02-mastra-setup
 
-`npm create mastra@latest` からはじめて、Agent 定義、Tool 追加、Mastra Studio での対話確認、LibSQL データベース初期化まで。ローカルで Mastra が動く状態を作ります。
+本書の「第2章 Mastra 環境構築と最初のエージェント」のサンプルコードです。本に載っているコードは、すべてこのディレクトリのファイルから差し込んでいます。
 
-## 本書の該当節
+## 動かし方
 
-- 2.1 プロジェクト作成 — `npm create mastra@latest`
-- 2.2 ディレクトリ構成 — `src/mastra/` の標準レイアウト
-- 2.4 mastra dev — ローカル開発サーバー起動
-- 2.6 最初のエージェント — `src/mastra/agents/index.ts`
-- 2.7 Model Provider 切り替え — Anthropic / OpenAI / Google
-- 2.8 Tool の追加 — `src/mastra/tools/index.ts`
-- 2.9 ストリーミング応答 — `agent.generate()` vs `agent.stream()`
-- 2.10 Mastra インスタンス登録 — `src/mastra/index.ts`
-- 2.11 LibSQL データベース — `file:./mastra.db`
-
-## SDK バージョン
-
-- Mastra `@mastra/core@1.78.0` / `@mastra/libsql@1.26.2`
-- AI SDK `ai@7.0.143` / `@ai-sdk/anthropic@4.0.82`
-
-## 前提条件
-
-- npm / pnpm / yarn
-- `ANTHROPIC_API_KEY` 環境変数
-
-## セットアップ
+repo の直下で一度 `npm install` してから（npm workspaces で全章の依存が入ります）:
 
 ```bash
-npm install
-cp .env.example .env
-# .env に ANTHROPIC_API_KEY を設定
+cd ch02-mastra-setup
+npm run typecheck   # 型チェック
+npm test            # テスト（偽のモデルを使うので API キー無しで通ります）
 ```
 
-## 構成
+## 本の節とファイル
 
-- `src/mastra/agents/index.ts` — supportAgent と weatherAgent の定義
-- `src/mastra/tools/index.ts` — weatherTool (Zod スキーマ付き)
-- `src/mastra/models.ts` — プロバイダ別のモデル指定 (Anthropic / OpenAI / Google)
-- `src/mastra/index.ts` — Mastra インスタンス (Agent 登録 + LibSQL 接続)
-- `src/steps/mastra-index.step1.ts` — 2.10 時点の Mastra インスタンス (storage を足す前)
-- `src/scripts/` — `generate()` / `stream()` / Structured Output を試すスクリプト
-- `test/` — 偽のモデル (`ai/test` の MockLanguageModelV4) を使ったテスト。API キーは不要
+- **2.3 環境変数を設定する**
+  - `.env.example`
+- **2.6 最初のエージェントを定義する**
+  - `src/mastra/agents/index.ts`
+- **2.7 Model Provider を切り替える**
+  - `src/mastra/models.ts`
+- **2.8 シンプルな Tool を追加する**
+  - `src/mastra/tools/index.ts`
+  - `src/mastra/agents/index.ts`
+- **2.9 ストリーミング応答と同期応答**
+  - `src/scripts/generate.ts`
+  - `src/scripts/stream.ts`
+  - `src/scripts/structured-output.ts`
+- **2.10 Mastra インスタンスへの登録**
+  - `src/steps/mastra-index.step1.ts`
+- **2.11 ローカル LibSQL データベースの初期化**
+  - `src/mastra/index.ts`
 
-## 実行方法
+## 主な依存（版は package.json に固定）
 
-```bash
-npm run typecheck
-npm test
-npx tsx src/scripts/generate.ts
-```
-
-## トピック
-
-- `npm create mastra@latest` による scaffolding
-- `src/mastra/` ディレクトリ規約 (agents/ tools/ index.ts)
-- Mastra Studio (localhost:4111) でフロントエンドなしに Agent をテスト
-- Agent 定義の 4 要素: id, name, instructions, model
-- `createTool()` + Zod スキーマで型安全な Tool 定義
-- `agent.generate()` (同期) vs `agent.stream()` (ストリーミング)
-- LibSQL による開発用データベース初期化
+- `@ai-sdk/anthropic` 4.0.82
+- `@ai-sdk/google` 4.0.99
+- `@ai-sdk/openai` 4.0.96
+- `@mastra/core` 1.78.0
+- `@mastra/libsql` 1.26.2
+- `zod` 4.6.7
