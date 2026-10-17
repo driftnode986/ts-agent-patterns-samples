@@ -31,3 +31,9 @@ coverage/
 *.db
 *.db-shm
 *.db-wal
+
+# Infrastructure as code (not used here; kept so secrets never get committed by accident)
+*.tfstate
+*.tfstate.backup
+.terraform/
+*.tfvars
