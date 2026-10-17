@@ -16,7 +16,8 @@
 
 ## SDK バージョン
 
-- Mastra `@mastra/core@1.35.0`
+- Mastra `@mastra/core@1.78.0` / `@mastra/libsql@1.26.2`
+- AI SDK `ai@7.0.143` / `@ai-sdk/anthropic@4.0.82`
 
 ## 前提条件
 
@@ -33,16 +34,20 @@ cp .env.example .env
 
 ## 構成
 
-- `src/mastra/agents/index.ts` — supportAgent の定義 (instructions + model)
+- `src/mastra/agents/index.ts` — supportAgent と weatherAgent の定義
 - `src/mastra/tools/index.ts` — weatherTool (Zod スキーマ付き)
+- `src/mastra/models.ts` — プロバイダ別のモデル指定 (Anthropic / OpenAI / Google)
 - `src/mastra/index.ts` — Mastra インスタンス (Agent 登録 + LibSQL 接続)
-- `src/scripts/chat.ts` — Agent との対話スクリプト
+- `src/steps/mastra-index.step1.ts` — 2.10 時点の Mastra インスタンス (storage を足す前)
+- `src/scripts/` — `generate()` / `stream()` / Structured Output を試すスクリプト
+- `test/` — 偽のモデル (`ai/test` の MockLanguageModelV4) を使ったテスト。API キーは不要
 
 ## 実行方法
 
 ```bash
-npx vitest run ch02-mastra-setup/
-npx tsx ch02-mastra-setup/src/scripts/chat.ts
+npm run typecheck
+npm test
+npx tsx src/scripts/generate.ts
 ```
 
 ## トピック
@@ -50,7 +55,7 @@ npx tsx ch02-mastra-setup/src/scripts/chat.ts
 - `npm create mastra@latest` による scaffolding
 - `src/mastra/` ディレクトリ規約 (agents/ tools/ index.ts)
 - Mastra Studio (localhost:4111) でフロントエンドなしに Agent をテスト
-- Agent 定義の 3 要素: id, instructions, model
+- Agent 定義の 4 要素: id, name, instructions, model
 - `createTool()` + Zod スキーマで型安全な Tool 定義
 - `agent.generate()` (同期) vs `agent.stream()` (ストリーミング)
 - LibSQL による開発用データベース初期化
