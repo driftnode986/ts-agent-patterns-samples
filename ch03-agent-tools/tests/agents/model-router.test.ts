@@ -5,6 +5,11 @@ import {
   agentGemini,
   agentGpt,
 } from '../../src/mastra/agents/provider-agents';
+import {
+  routerClaude,
+  routerGemini,
+  routerGpt,
+} from '../../src/mastra/agents/router-agents';
 
 // ここでは LLM を呼ばない。モデルの選び方だけを確かめる
 describe('selectModel (3.10)', () => {
@@ -16,7 +21,7 @@ describe('selectModel (3.10)', () => {
   });
 });
 
-describe('Model Router (3.8)', () => {
+describe('AI SDK のプロバイダ関数 (3.8)', () => {
   it('model の指定だけでプロバイダが切り替わる', async () => {
     const models = await Promise.all(
       [agentClaude, agentGpt, agentGemini].map((a) => a.getModel()),
@@ -24,12 +29,25 @@ describe('Model Router (3.8)', () => {
     expect(models.map((m) => m.modelId)).toEqual([
       'claude-sonnet-4-6',
       'gpt-4o',
-      'gemini-2.0-flash',
+      'gemini-2.5-flash',
     ]);
     expect(models.map((m) => m.provider.split('.')[0])).toEqual([
       'anthropic',
       'openai',
       'google',
+    ]);
+  });
+});
+
+describe('Model Router の文字列指定 (3.8)', () => {
+  it('provider/model の文字列から各プロバイダのモデルになる', async () => {
+    const models = await Promise.all(
+      [routerClaude, routerGpt, routerGemini].map((a) => a.getModel()),
+    );
+    expect(models.map((m) => [m.provider, m.modelId])).toEqual([
+      ['anthropic', 'claude-sonnet-4-6'],
+      ['openai', 'gpt-4o'],
+      ['google', 'gemini-2.5-flash'],
     ]);
   });
 });

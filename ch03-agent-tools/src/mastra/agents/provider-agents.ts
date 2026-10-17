@@ -6,7 +6,7 @@ import { google } from '@ai-sdk/google';
 
 const instructions = 'ユーザーの質問に回答するアシスタントです。';
 
-// プロバイダを切り替えるには、import とモデル名を変えるだけ
+// AI SDK のプロバイダ関数でモデルを渡す。プロバイダごとに import が要る
 export const agentClaude = new Agent({
   id: 'claude-agent',
   name: 'Claude エージェント',
@@ -25,5 +25,5 @@ export const agentGemini = new Agent({
   id: 'gemini-agent',
   name: 'Gemini エージェント',
   instructions,
-  model: google('gemini-2.0-flash'),
+  model: google('gemini-2.5-flash'),
 });
