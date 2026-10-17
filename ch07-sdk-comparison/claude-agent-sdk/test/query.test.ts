@@ -56,28 +56,40 @@ describe('Claude Agent SDK', () => {
     });
   });
 
-  it('stateless.ts limits the tools', async () => {
+  it('stateless.ts limits the tools to Read and Glob', async () => {
     vi.spyOn(console, 'log').mockImplementation(() => {});
     await import('../src/stateless');
     expect(query.mock.calls[0]?.[0]).toMatchObject({
-      options: { allowedTools: ['Read', 'Bash', 'Glob'], maxTurns: 5 },
+      options: {
+        tools: ['Read', 'Glob'],
+        allowedTools: ['Read', 'Glob'],
+        permissionMode: 'dontAsk',
+        maxTurns: 5,
+      },
     });
   });
 
-  it('read-only.ts blocks write tools, including the MCP server ones', async () => {
+  // 本物の Claude Code で書き込みが拒否されることは permissions.e2e.test.ts で確かめる
+  it('read-only.ts allows only the read tools, including the MCP server ones', async () => {
     vi.spyOn(console, 'log').mockImplementation(() => {});
     vi.stubEnv('SPECS_DIR', undefined);
     await import('../src/read-only');
-    expect(query.mock.calls[0]?.[0]).toMatchObject({
+    const options = query.mock.calls[0]?.[0];
+    expect(options).toMatchObject({
       options: {
-        disallowedTools: [
-          'Write',
-          'Edit',
-          'mcp__specs__write_file',
-          'mcp__specs__edit_file',
-          'mcp__specs__create_directory',
-          'mcp__specs__move_file',
+        tools: ['Read', 'Glob', 'Grep'],
+        allowedTools: [
+          'Read',
+          'Glob',
+          'Grep',
+          'mcp__specs__read_text_file',
+          'mcp__specs__read_multiple_files',
+          'mcp__specs__list_directory',
+          'mcp__specs__directory_tree',
+          'mcp__specs__search_files',
+          'mcp__specs__get_file_info',
         ],
+        permissionMode: 'dontAsk',
         mcpServers: {
           specs: {
             command: 'npx',
@@ -90,6 +102,7 @@ describe('Claude Agent SDK', () => {
         },
       },
     });
+    expect(options).not.toHaveProperty('options.allowDangerouslySkipPermissions');
     vi.unstubAllEnvs();
   });
 });

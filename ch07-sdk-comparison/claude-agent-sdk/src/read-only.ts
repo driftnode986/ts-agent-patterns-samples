@@ -2,8 +2,9 @@
 import { runQuery } from './run-query';
 
 // MCP のツール名は mcp__<サーバー名>__<ツール名> になる
-const specsWriteTools = [
-  'write_file', 'edit_file', 'create_directory', 'move_file',
+const specsReadTools = [
+  'read_text_file', 'read_multiple_files', 'list_directory',
+  'directory_tree', 'search_files', 'get_file_info',
 ].map((name) => `mcp__specs__${name}`);
 
 const result = await runQuery({
@@ -11,10 +12,9 @@ const result = await runQuery({
     'src/api/ 配下のエンドポイントを一覧にして、' +
     '仕様書フォルダの記述と食い違いがないか確認して',
   options: {
-    allowedTools: ['Read', 'Bash', 'Glob', 'Grep'],
-    disallowedTools: ['Write', 'Edit', ...specsWriteTools],
-    permissionMode: 'bypassPermissions',
-    allowDangerouslySkipPermissions: true,
+    tools: ['Read', 'Glob', 'Grep'], // 使える組込ツールはこの 3 つだけ
+    allowedTools: ['Read', 'Glob', 'Grep', ...specsReadTools],
+    permissionMode: 'dontAsk', // allowedTools に無い呼び出しは拒否する
     mcpServers: {
       specs: {
         command: 'npx',

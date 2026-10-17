@@ -34,7 +34,11 @@ describe('codeReviewTool', () => {
 
     expect(query.mock.calls[0]?.[0]).toMatchObject({
       prompt: expect.stringContaining('src/a.ts'),
-      options: { allowedTools: ['Read', 'Grep'] },
+      options: {
+        tools: ['Read', 'Grep', 'Glob'],
+        allowedTools: ['Read', 'Grep', 'Glob'],
+        permissionMode: 'dontAsk',
+      },
     });
     expect(res.toolResults[0]?.payload.result).toEqual({
       review: '問題1: any を使っている。問題2: 例外を握りつぶしている。',
