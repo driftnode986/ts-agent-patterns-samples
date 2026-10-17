@@ -7,11 +7,15 @@ import { RegexFilterProcessor } from '@mastra/core/processors';
 // #endregion
 
 // #region mask
+// (?<![\d-]) と (?![\d-]) は「前後に数字もハイフンも無い」という条件で、
+// 長い番号の途中から一致しないようにする。maskPII() は上から順に
+// 置き換えるため、重なる場合に備えて長い番号のパターンを先に置く
+// （g を付けないと、それぞれ最初の 1 件しか置き換えない）
 const PII_PATTERNS = {
+  creditCard: /(?<![\d-])\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}(?![\d-])/g,
+  myNumber: /(?<![\d-])\d{4}\s?\d{4}\s?\d{4}(?![\d-])/g,
   email: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
-  phone: /0\d{1,4}-?\d{1,4}-?\d{4}/g,
-  creditCard: /\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}/g,
-  myNumber: /\d{4}\s?\d{4}\s?\d{4}/g,
+  phone: /(?<![\d-])0\d{1,4}-?\d{1,4}-?\d{4}(?![\d-])/g,
 };
 
 // 監査ログなど、文字列をそのまま伏せたい場面で使う

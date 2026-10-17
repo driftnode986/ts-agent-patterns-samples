@@ -45,6 +45,34 @@ describe('PII のマスク', () => {
     );
   });
 
+  // 番号どうしが重なる入力。maskPII() と入力プロセッサの結果がそろうこと
+  const overlapping = [
+    { input: '0123456789012345', masked: '[CREDITCARD_MASKED]' },
+    { input: '202610170001', masked: '[MYNUMBER_MASKED]' },
+    {
+      input: '090-1234-5678 4111-1111-1111-1111',
+      masked: '[PHONE_MASKED] [CREDITCARD_MASKED]',
+    },
+  ];
+
+  it.each(overlapping)('maskPII() は $input を $masked にする', ({ input, masked }) => {
+    expect(maskPII(input)).toBe(masked);
+  });
+
+  it.each(overlapping)(
+    '入力プロセッサも $input を $masked にする',
+    async ({ input, masked }) => {
+      const model = textModel('承知しました');
+      const agent = createPIIFilteredAgent(model);
+      await agent.generate(`番号は ${input} です`, {
+        modelSettings: { maxRetries: 0 },
+      });
+      const sent = JSON.stringify(model.doGenerateCalls[0].prompt);
+      expect(sent).toContain(`番号は ${masked} です`);
+      expect(sent).not.toContain(input);
+    },
+  );
+
   // 偽のモデルが受け取ったプロンプトに、元の PII が残っていないかを見る
   const input = '連絡先は a@example.com、電話は 090-1234-5678 です';
   const expectMasked = (prompt: unknown) => {

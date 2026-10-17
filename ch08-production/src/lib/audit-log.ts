@@ -2,7 +2,7 @@
 import { z } from 'zod';
 
 const AuditLogSchema = z.object({
-  timestamp: z.string().datetime(),
+  timestamp: z.iso.datetime(),
   userId: z.string(),
   agentName: z.string(),
   action: z.enum(['invoke', 'tool_call', 'complete', 'error']),
