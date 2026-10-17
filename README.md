@@ -8,7 +8,7 @@ Kindle 版: [Mastra ではじめる TypeScript AI エージェント実装](http
 
 ## 動作環境
 
-- **Node.js** 22 以上
+- **Node.js** 22.13 以上（@mastra/core 1.78.0 の要件）
 - **npm**（npm workspaces を使います）
 - **OS** macOS / Linux / WSL2
 
@@ -31,6 +31,15 @@ npm test               # 全章のテスト
 
 cd ch05-workflow       # 1つの章だけ
 npm run typecheck && npm test
+```
+
+## スクリプトの実行
+
+本で `src/scripts/` などのスクリプトを動かすときは、repo に入っている tsx を使います（`.env` に API キーが要ります）。
+
+```bash
+cd ch04-memory-rag
+npx tsx --env-file=../.env src/scripts/chat.ts
 ```
 
 ## 環境変数
