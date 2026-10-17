@@ -1,2 +1,4 @@
 mastra.db
 mastra.db-*
+# npm run dev（mastra dev）の作業ディレクトリ。mastra.db もここに作られる
+src/mastra/public/
