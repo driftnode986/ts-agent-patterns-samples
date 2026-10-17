@@ -16,11 +16,12 @@ export const delegateCodeReviewTool = createTool({
   }),
   execute: async (inputData) => {
     const result = await codeReviewAgent.generate(
-      `以下の ${inputData.language} コードをレビューしてください:\n\n${inputData.code}`
+      `以下の ${inputData.language} コードをレビューしてください:\n\n` +
+        inputData.code
     );
     return {
       review: result.text,
-      severity: 'info',
+      severity: 'info' as const,
     };
   },
 });

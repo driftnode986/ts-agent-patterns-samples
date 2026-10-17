@@ -1,3 +1,4 @@
+// #region generate
 // src/scripts/structured-example.ts
 import { z } from 'zod';
 import { supportAgent } from '../mastra/agents';
@@ -22,3 +23,19 @@ const response = await supportAgent.generate(
 console.log(response.object.title);       // "Next.js ログイン画面の実装"
 console.log(response.object.priority);    // "high"
 console.log(response.object.estimatedHours); // 8
+// #endregion
+
+// #region stream
+const stream = await supportAgent.stream(
+  '今週のスプリントタスクを 3 つ提案してください',
+  {
+    structuredOutput: {
+      schema: z.array(taskSchema),
+    },
+  }
+);
+
+const tasks = await stream.object;
+// tasks は taskSchema[] 型
+// #endregion
+console.log(tasks.length);

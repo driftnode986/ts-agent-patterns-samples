@@ -6,7 +6,8 @@ export function buildInstructions(config: {
 }) {
   const tierInstructions = config.supportTier === 'premium'
     ? '技術的に深い質問にも対応してください。コード例を積極的に示してください。'
-    : '基本的な使い方を案内してください。技術的な詳細は開発チームにエスカレーションしてください。';
+    : '基本的な使い方を案内してください。' +
+      '技術的な詳細は開発チームにエスカレーションしてください。';
 
   return `あなたは ${config.companyName} のカスタマーサポートエージェントです。
 

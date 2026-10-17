@@ -1,6 +1,8 @@
+// #region define
 // src/mastra/tools/invoice.ts
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
+import { billingService } from '../../lib/billing-service';
 
 export const createInvoiceTool = createTool({
   id: 'create-invoice',
@@ -15,6 +17,8 @@ export const createInvoiceTool = createTool({
     invoiceId: z.string(),
     status: z.enum(['draft', 'sent', 'paid']),
   }),
+  // #endregion
+  // #region execute
   execute: async (inputData) => {
     const invoice = await billingService.create({
       customerId: inputData.customerId,
@@ -28,3 +32,4 @@ export const createInvoiceTool = createTool({
     };
   },
 });
+// #endregion

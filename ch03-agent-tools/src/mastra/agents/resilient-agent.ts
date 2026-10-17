@@ -7,12 +7,8 @@ export const resilientAgent = new Agent({
   id: 'resilient-agent',
   name: '耐障害エージェント',
   instructions: 'ユーザーの質問に回答するアシスタントです。',
-  model: {
-    provider: anthropic,
-    name: 'claude-sonnet-4-6',
-    fallback: {
-      provider: openai,
-      name: 'gpt-4o',
-    },
-  },
+  model: [
+    { model: anthropic('claude-sonnet-4-6'), maxRetries: 2 },
+    { model: openai('gpt-4o'), maxRetries: 2 },
+  ],
 });

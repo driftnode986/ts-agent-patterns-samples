@@ -2,6 +2,8 @@
 import { Agent } from '@mastra/core/agent';
 import { anthropic } from '@ai-sdk/anthropic';
 import { buildInstructions } from '../../lib/instructions';
+import type { TenantConfig } from '../../lib/tenant-config';
+import { searchKnowledgeBase } from '../tools';
 
 export function createTenantAgent(tenantConfig: TenantConfig) {
   return new Agent({
