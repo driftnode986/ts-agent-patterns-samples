@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { checkCostCap, recordUsage } from '../src/lib/cost-cap';
 import { writeAuditLog } from '../src/lib/audit-log';
 import { createPIIFilteredAgent, maskPII } from '../src/lib/pii-filter';
+import { textModel } from './mock-model';
 import { detectInjection } from '../src/lib/input-guard';
 import { validateOutput } from '../src/lib/output-guard';
 import { agentMiddleware, checkAgentAccess } from '../src/middleware/rbac';
@@ -34,7 +35,7 @@ describe('writeAuditLog', () => {
   });
 });
 
-describe('maskPII', () => {
+describe('PII のマスク', () => {
   it('メール・電話番号・カード番号をマスクする', () => {
     const masked = maskPII(
       'a.b@example.com 090-1234-5678 4111-1111-1111-1111'
@@ -44,13 +45,36 @@ describe('maskPII', () => {
     );
   });
 
-  it('LLM に渡す前にマスクする', async () => {
-    const generate = vi.fn().mockResolvedValue({ text: 'ok' });
-    const agent = createPIIFilteredAgent({ generate });
-    await agent.generate([{ role: 'user', content: '連絡先 a@example.com' }]);
-    expect(generate).toHaveBeenCalledWith([
-      { role: 'user', content: '連絡先 [EMAIL_MASKED]' },
-    ]);
+  // 偽のモデルが受け取ったプロンプトに、元の PII が残っていないかを見る
+  const input = '連絡先は a@example.com、電話は 090-1234-5678 です';
+  const expectMasked = (prompt: unknown) => {
+    const sent = JSON.stringify(prompt);
+    expect(sent).not.toContain('a@example.com');
+    expect(sent).not.toContain('090-1234-5678');
+    expect(sent).toContain('[EMAIL_MASKED]');
+    expect(sent).toContain('[PHONE_MASKED]');
+  };
+
+  it('generate() でモデルに渡す前にマスクする', async () => {
+    const model = textModel('承知しました');
+    const agent = createPIIFilteredAgent(model);
+    const result = await agent.generate(input, {
+      modelSettings: { maxRetries: 0 },
+    });
+    expect(result.text).toBe('承知しました');
+    expect(model.doGenerateCalls).toHaveLength(1);
+    expectMasked(model.doGenerateCalls[0].prompt);
+  });
+
+  it('stream() でもモデルに渡す前にマスクする', async () => {
+    const model = textModel('承知しました');
+    const agent = createPIIFilteredAgent(model);
+    const result = await agent.stream(input, {
+      modelSettings: { maxRetries: 0 },
+    });
+    expect(await result.text).toBe('承知しました');
+    expect(model.doStreamCalls).toHaveLength(1);
+    expectMasked(model.doStreamCalls[0].prompt);
   });
 });
 
