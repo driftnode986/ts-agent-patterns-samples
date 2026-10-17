@@ -14,6 +14,8 @@ npm test            # テスト（偽のモデルを使うので API キー無�
 
 ## 本の節とファイル
 
+- **この章で扱うバージョン (2026-10 に確認)**
+  - `.env.example`
 - **3.1 Agent の構成要素**
   - `src/mastra/tools/research.ts`
   - `src/mastra/tools/index.ts`
@@ -37,6 +39,7 @@ npm test            # テスト（偽のモデルを使うので API キー無�
   - `src/mastra/agents/github-agent.ts`
   - `src/mastra/mcp/user-tools.ts`
 - **3.8 Model Router 概要　216 プロバイダ / 8,000 以上のモデル**
+  - `src/mastra/agents/router-agents.ts`
   - `src/mastra/agents/provider-agents.ts`
 - **3.9 Model fallback　rate limit 時の自動切替**
   - `src/mastra/agents/resilient-agent.ts`
