@@ -1,4 +1,3 @@
-// test/pii-redactor.test.ts
 import { describe, it, expect, vi } from 'vitest';
 import { Mastra } from '@mastra/core';
 import { createStep, createWorkflow } from '@mastra/core/workflows';

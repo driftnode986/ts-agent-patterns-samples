@@ -1,5 +1,4 @@
 // #region define
-// src/mastra/tools/invoice.ts
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
 import { billingService } from '../../lib/billing-service';

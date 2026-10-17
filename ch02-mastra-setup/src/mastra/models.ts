@@ -1,4 +1,3 @@
-// src/mastra/models.ts
 // #region anthropic
 // Anthropic Claude
 import { anthropic } from '@ai-sdk/anthropic';

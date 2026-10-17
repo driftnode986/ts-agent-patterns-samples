@@ -1,4 +1,3 @@
-// src/inspect-run.ts
 // #region imports
 import { createWorkflowStateReader } from '@mastra/core/workflows';
 import { mastra } from './mastra';

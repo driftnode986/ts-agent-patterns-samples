@@ -1,4 +1,3 @@
-// src/lib/db.ts
 import pg from 'pg';
 
 // pgvector 拡張を入れた PostgreSQL に接続する

@@ -1,4 +1,3 @@
-// src/mastra/workflows/document-review-workflow.ts
 import { createWorkflow } from '@mastra/core/workflows';
 import { z } from 'zod';
 import { aiReviewStep } from './steps/ai-review';

@@ -1,4 +1,3 @@
-// src/observability/sampling.ts
 // #region imports
 import {
   Observability,

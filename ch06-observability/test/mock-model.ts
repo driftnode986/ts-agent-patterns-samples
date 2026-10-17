@@ -1,4 +1,3 @@
-// test/mock-model.ts
 // LLM を呼ばずに、決まった文字列を返すモデル
 import { MockLanguageModelV4 } from 'ai/test';
 import { simulateReadableStream } from 'ai';

@@ -1,4 +1,3 @@
-// src/index.ts
 import { Agent, type Connection, type WSMessage } from 'agents';
 
 export class MyAgent extends Agent<Env> {

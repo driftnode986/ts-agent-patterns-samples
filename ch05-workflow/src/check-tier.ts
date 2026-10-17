@@ -1,4 +1,3 @@
-// src/check-tier.ts
 import { RequestContext } from '@mastra/core/request-context';
 import { tierWorkflow } from './mastra/workflows/tier-workflow';
 

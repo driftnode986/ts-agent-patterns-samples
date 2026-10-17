@@ -1,4 +1,3 @@
-// src/lib/model-router.ts
 import { anthropic } from '@ai-sdk/anthropic';
 
 export function selectModel(inputTokens: number) {

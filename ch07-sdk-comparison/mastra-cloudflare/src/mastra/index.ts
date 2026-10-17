@@ -1,4 +1,3 @@
-// src/mastra/index.ts
 import { Mastra } from '@mastra/core';
 import { CloudflareDeployer } from '@mastra/deployer-cloudflare';
 import { customerSupport } from './agents/customer-support';

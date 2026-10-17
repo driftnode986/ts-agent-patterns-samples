@@ -1,4 +1,3 @@
-// src/types/handle-agent-state.ts
 import type { AgentState } from './agent-state';
 
 // #region exhaustive

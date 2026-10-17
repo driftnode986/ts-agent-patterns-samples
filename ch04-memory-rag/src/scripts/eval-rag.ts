@@ -1,4 +1,3 @@
-// src/scripts/eval-rag.ts
 import { searchKnowledgeBase } from '../lib/search';
 
 const testCases = [

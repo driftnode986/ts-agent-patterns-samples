@@ -1,4 +1,3 @@
-// src/observability/langfuse-modes.ts
 // キーは LANGFUSE_PUBLIC_KEY / LANGFUSE_SECRET_KEY 環境変数から読まれる
 import { LangfuseExporter } from '@mastra/langfuse';
 

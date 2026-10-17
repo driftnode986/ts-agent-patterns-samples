@@ -1,4 +1,3 @@
-// src/app/api/agent/route.ts
 import { createUIMessageStreamResponse } from 'ai';
 import { toAISdkStream } from '@mastra/ai-sdk';
 import { mastra } from '@/mastra';

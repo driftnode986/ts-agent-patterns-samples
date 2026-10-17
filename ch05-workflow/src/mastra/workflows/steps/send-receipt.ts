@@ -1,4 +1,3 @@
-// src/mastra/workflows/steps/send-receipt.ts
 import { createStep } from '@mastra/core/workflows';
 import { z } from 'zod';
 

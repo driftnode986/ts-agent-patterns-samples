@@ -1,4 +1,3 @@
-// src/mastra/workflows/map-workflow.ts
 import { createStep, createWorkflow } from '@mastra/core/workflows';
 import { z } from 'zod';
 

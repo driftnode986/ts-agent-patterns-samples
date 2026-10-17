@@ -1,4 +1,3 @@
-// src/lib/search-tenant.ts
 import { embed } from 'ai';
 import { PgVector } from '@mastra/pg';
 import { ModelRouterEmbeddingModel } from '@mastra/core/llm';

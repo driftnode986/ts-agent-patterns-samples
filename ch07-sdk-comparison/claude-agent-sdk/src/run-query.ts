@@ -1,4 +1,3 @@
-// src/run-query.ts
 import { query } from '@anthropic-ai/claude-agent-sdk';
 
 /** query() のメッセージを最後まで読み、最終回答とセッション ID を返す */

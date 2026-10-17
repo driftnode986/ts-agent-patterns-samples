@@ -1,4 +1,3 @@
-// test/quality-scorer.test.ts
 import { describe, it, expect, vi } from 'vitest';
 import { fakeAnthropicFetch } from './fake-anthropic';
 import { mockModel } from './mock-model';

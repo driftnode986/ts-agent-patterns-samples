@@ -1,4 +1,3 @@
-// src/evals/run-quality-scorer.ts
 import { supportAgent as agent } from '../mastra/agents/support-agent';
 import { qualityScorer } from './quality-scorer';
 

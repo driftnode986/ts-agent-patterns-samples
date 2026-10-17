@@ -1,4 +1,3 @@
-// src/mastra/tools/search-docs.ts
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
 import { searchKnowledgeBase } from '../../lib/search';

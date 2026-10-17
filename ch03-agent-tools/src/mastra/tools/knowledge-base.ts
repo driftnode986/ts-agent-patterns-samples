@@ -1,4 +1,3 @@
-// src/mastra/tools/knowledge-base.ts
 // 3.12 のテナント Agent に渡す Tool。FAQ をキーワードで検索する
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';

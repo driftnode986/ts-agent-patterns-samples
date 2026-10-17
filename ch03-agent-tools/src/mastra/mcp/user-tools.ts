@@ -1,4 +1,3 @@
-// src/mastra/mcp/user-tools.ts
 import type { Agent } from '@mastra/core/agent';
 import { MCPClient } from '@mastra/mcp';
 

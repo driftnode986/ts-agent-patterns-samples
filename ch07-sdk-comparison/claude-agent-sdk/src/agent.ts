@@ -1,4 +1,3 @@
-// src/agent.ts
 import { query } from '@anthropic-ai/claude-agent-sdk';
 
 for await (const message of query({

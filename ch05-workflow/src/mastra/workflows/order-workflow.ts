@@ -1,4 +1,3 @@
-// src/mastra/workflows/order-workflow.ts
 import { createWorkflow } from '@mastra/core/workflows';
 import { z } from 'zod';
 import { approvalStep } from './steps/approval';

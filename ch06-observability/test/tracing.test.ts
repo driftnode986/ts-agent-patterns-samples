@@ -1,4 +1,3 @@
-// test/tracing.test.ts
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { Mastra } from '@mastra/core';
 import { SpanType } from '@mastra/core/observability';

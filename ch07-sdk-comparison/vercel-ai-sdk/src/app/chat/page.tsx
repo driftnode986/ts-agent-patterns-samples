@@ -1,5 +1,4 @@
 // #region chat-hook
-// src/app/chat/page.tsx
 'use client';
 
 import { useState } from 'react';

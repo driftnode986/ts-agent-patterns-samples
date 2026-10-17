@@ -1,5 +1,4 @@
 // #region support-agent
-// src/mastra/agents/index.ts
 import { Agent } from '@mastra/core/agent';
 import { anthropic } from '@ai-sdk/anthropic';
 

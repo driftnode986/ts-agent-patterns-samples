@@ -1,4 +1,3 @@
-// src/types/units.ts
 import type { Brand } from './branded';
 
 // #region units

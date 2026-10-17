@@ -1,4 +1,3 @@
-// src/mastra/workflows/steps/validate-input.ts
 import { createStep } from '@mastra/core/workflows';
 import { z } from 'zod';
 

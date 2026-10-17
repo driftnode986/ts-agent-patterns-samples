@@ -1,4 +1,3 @@
-// src/scripts/index-chunked-documents.ts
 // #region setup
 import fs from 'node:fs/promises';
 import { embed } from 'ai';

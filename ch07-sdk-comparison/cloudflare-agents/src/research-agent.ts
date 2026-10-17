@@ -1,4 +1,3 @@
-// src/research-agent.ts
 import { Agent, type Connection, type WSMessage } from 'agents';
 
 export class ResearchAgent extends Agent<Env> {

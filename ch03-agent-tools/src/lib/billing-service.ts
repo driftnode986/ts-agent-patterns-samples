@@ -1,4 +1,3 @@
-// src/lib/billing-service.ts
 // 請求システムの代わり。作成した請求書をメモリ上に保持する
 type Invoice = {
   id: string;

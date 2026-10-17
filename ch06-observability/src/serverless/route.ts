@@ -1,4 +1,3 @@
-// src/serverless/route.ts
 import { mastra } from '../mastra';
 import { supportAgent as agent } from '../mastra/agents/support-agent';
 

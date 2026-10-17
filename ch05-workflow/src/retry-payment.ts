@@ -1,4 +1,3 @@
-// src/retry-payment.ts
 import { mastra } from './mastra';
 
 export async function payWithRetry() {

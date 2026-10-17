@@ -1,5 +1,4 @@
 // #region setup
-// src/lib/db.ts
 // 顧客データベースの代わり。LibSQL のメモリ上の DB に顧客を2件入れておく
 import { createClient } from '@libsql/client';
 

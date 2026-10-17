@@ -1,4 +1,3 @@
-// src/lib/vector-store.ts
 // 検索先の代わり。メモリ上の文書から、クエリを含むものを返す
 export class RateLimitError extends Error {
   constructor(public readonly retryAfter: number) {

@@ -1,4 +1,3 @@
-// src/examples/get-memory.ts
 import type { ThreadId, UserId } from '../types/branded';
 
 // #region get-memory

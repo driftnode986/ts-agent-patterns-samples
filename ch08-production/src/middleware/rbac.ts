@@ -1,4 +1,3 @@
-// src/middleware/rbac.ts
 // #region permissions
 import { z } from 'zod';
 import { getSession } from '../lib/session';

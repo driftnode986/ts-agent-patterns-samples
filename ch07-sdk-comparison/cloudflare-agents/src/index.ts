@@ -1,5 +1,4 @@
 // #region customer-support
-// src/index.ts
 import {
   Agent,
   getAgentByName,

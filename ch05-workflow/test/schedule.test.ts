@@ -1,4 +1,3 @@
-// test/schedule.test.ts
 import { afterAll, describe, expect, it } from 'vitest';
 import { Mastra } from '@mastra/core';
 import { LibSQLStore } from '@mastra/libsql';

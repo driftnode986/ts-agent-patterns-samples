@@ -1,4 +1,3 @@
-// src/lib/instructions.ts
 export function buildInstructions(config: {
   companyName: string;
   supportTier: 'basic' | 'premium';

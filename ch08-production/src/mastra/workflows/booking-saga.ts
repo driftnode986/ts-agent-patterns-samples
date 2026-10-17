@@ -1,4 +1,3 @@
-// src/mastra/workflows/booking-saga.ts
 // #region steps
 import { createWorkflow, createStep } from '@mastra/core/workflows';
 import { z } from 'zod';

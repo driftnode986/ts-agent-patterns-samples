@@ -1,4 +1,3 @@
-// src/examples/api-path.ts
 // #region api-path
 type ApiVersion = 'v1' | 'v2';
 type Resource = 'users' | 'threads' | 'messages';

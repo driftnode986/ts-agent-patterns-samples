@@ -1,4 +1,3 @@
-// src/mastra/workflows/approval-workflow.ts
 // #region analyze
 import { createWorkflow, createStep } from '@mastra/core/workflows';
 import { z } from 'zod';

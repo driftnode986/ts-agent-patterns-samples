@@ -1,4 +1,3 @@
-// test/prompt-linking.test.ts
 import { describe, it, expect, vi } from 'vitest';
 import { Mastra } from '@mastra/core';
 import { Observability, TestExporter } from '@mastra/observability';

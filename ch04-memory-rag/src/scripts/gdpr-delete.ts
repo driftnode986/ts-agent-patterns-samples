@@ -1,4 +1,3 @@
-// src/scripts/gdpr-delete.ts
 import { memory } from '../mastra';
 
 export async function deleteUserData(userId: string) {

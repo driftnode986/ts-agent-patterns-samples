@@ -1,4 +1,3 @@
-// test/serverless-route.test.ts
 import { describe, it, expect, vi } from 'vitest';
 import { mockModel } from './mock-model';
 

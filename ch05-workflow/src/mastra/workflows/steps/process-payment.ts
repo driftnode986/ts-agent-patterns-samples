@@ -1,4 +1,3 @@
-// src/mastra/workflows/steps/process-payment.ts
 import { createStep } from '@mastra/core/workflows';
 import { z } from 'zod';
 import { paymentGateway } from '../../../lib/payment-gateway';

@@ -1,4 +1,3 @@
-// src/middleware/canary.ts
 // #region select
 import { hashCode } from '../lib/hash';
 

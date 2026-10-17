@@ -1,5 +1,4 @@
 // #region approval-schemas
-// src/mastra/workflows/steps/approval.ts
 import { createStep } from '@mastra/core/workflows';
 import { z } from 'zod';
 

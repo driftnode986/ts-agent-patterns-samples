@@ -1,4 +1,3 @@
-// src/mastra/mcp/client.ts
 import { MCPClient } from '@mastra/mcp';
 
 export const mcpClient = new MCPClient({

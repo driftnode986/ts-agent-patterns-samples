@@ -1,5 +1,4 @@
 // #region imports
-// src/mastra/workflows/steps/compensate-payment.ts
 import { createStep, createWorkflow } from '@mastra/core/workflows';
 import { z } from 'zod';
 import { paymentGateway } from '../../../lib/payment-gateway';

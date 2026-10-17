@@ -1,4 +1,3 @@
-// src/lib/output-guard.ts
 export function validateOutput(output: string): {
   safe: boolean;
   reason?: string;

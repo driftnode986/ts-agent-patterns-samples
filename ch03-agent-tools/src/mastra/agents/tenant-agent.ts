@@ -1,4 +1,3 @@
-// src/mastra/agents/tenant-agent.ts
 import { Agent } from '@mastra/core/agent';
 import { anthropic } from '@ai-sdk/anthropic';
 import { buildInstructions } from '../../lib/instructions';

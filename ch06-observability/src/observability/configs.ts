@@ -1,4 +1,3 @@
-// src/observability/configs.ts
 // #region imports
 import {
   Observability,

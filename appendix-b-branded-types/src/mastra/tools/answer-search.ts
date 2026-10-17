@@ -1,4 +1,3 @@
-// src/mastra/tools/answer-search.ts
 import { searchDocuments } from './search';
 
 export async function answerSearch(query: string): Promise<string> {

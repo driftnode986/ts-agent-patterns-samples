@@ -1,4 +1,3 @@
-// src/mastra/workflows/payment-workflow.ts
 import { createWorkflow } from '@mastra/core/workflows';
 import { z } from 'zod';
 import { validateInput } from './steps/validate-input';

@@ -1,4 +1,3 @@
-// src/mastra/tools/search.ts
 import { isRateLimitError, vectorStore } from '../../lib/vector-store';
 import { failure, success, type Result } from '../../types/result';
 

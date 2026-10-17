@@ -1,4 +1,3 @@
-// src/app/api/chat/route.ts
 import { convertToModelMessages, streamText, type UIMessage } from 'ai';
 import { anthropic } from '@ai-sdk/anthropic';
 

@@ -1,5 +1,4 @@
 // #region setup
-// tests/agents/support.test.ts
 import { describe, it, expect, vi } from 'vitest';
 import { claude } from '../helpers/models';
 

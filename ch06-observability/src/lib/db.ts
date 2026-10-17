@@ -1,4 +1,3 @@
-// src/lib/db.ts
 // 検索の例に使うメモリ上の DB。本番では PostgreSQL などに置き換える
 // #region db
 const documents = [

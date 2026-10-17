@@ -1,5 +1,4 @@
 // #region imports
-// src/mastra/workflows/routing-workflow.ts
 import { createWorkflow } from '@mastra/core/workflows';
 import { z } from 'zod';
 import {

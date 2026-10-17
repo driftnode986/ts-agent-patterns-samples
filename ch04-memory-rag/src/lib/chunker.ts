@@ -1,4 +1,3 @@
-// src/lib/chunker.ts
 export function chunkDocument(text: string, options: {
   maxChunkSize: number;
   overlap: number;

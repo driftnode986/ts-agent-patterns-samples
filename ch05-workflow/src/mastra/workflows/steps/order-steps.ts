@@ -1,4 +1,3 @@
-// src/mastra/workflows/steps/order-steps.ts
 import { createStep } from '@mastra/core/workflows';
 import { z } from 'zod';
 import { inventory } from '../../../lib/inventory';

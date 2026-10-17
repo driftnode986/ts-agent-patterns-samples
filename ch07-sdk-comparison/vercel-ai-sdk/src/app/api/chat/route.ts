@@ -1,5 +1,4 @@
 // #region weather-tool
-// src/app/api/chat/route.ts
 import {
   convertToModelMessages,
   isStepCount,

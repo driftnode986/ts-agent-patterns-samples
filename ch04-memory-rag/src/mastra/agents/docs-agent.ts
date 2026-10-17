@@ -1,4 +1,3 @@
-// src/mastra/agents/docs-agent.ts
 import { Agent } from '@mastra/core/agent';
 import { anthropic } from '@ai-sdk/anthropic';
 import { searchDocsTool } from '../tools/search-docs';

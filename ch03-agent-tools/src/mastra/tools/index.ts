@@ -1,4 +1,3 @@
-// src/mastra/tools/index.ts
 export { getCustomerTool } from './customer';
 export { createInvoiceTool } from './invoice';
 export { queryDatabaseTool } from './database';

@@ -1,4 +1,3 @@
-// test/otel-bridge.test.ts
 import { createServer } from 'node:http';
 import type { AddressInfo } from 'node:net';
 import { afterAll, describe, it, expect, vi } from 'vitest';

@@ -1,4 +1,3 @@
-// src/mastra/agents/support.ts
 import { Agent } from '@mastra/core/agent';
 import { anthropic } from '@ai-sdk/anthropic';
 import { memory } from '../memory';

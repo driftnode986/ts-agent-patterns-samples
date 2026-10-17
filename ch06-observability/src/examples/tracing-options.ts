@@ -1,4 +1,3 @@
-// src/examples/tracing-options.ts
 import { supportAgent as agent } from '../mastra/agents/support-agent';
 
 // トレースにタグとメタデータを付けて呼び出す (6.6)

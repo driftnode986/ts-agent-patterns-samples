@@ -1,4 +1,3 @@
-// tests/tools/customer.test.ts
 import { describe, it, expect } from 'vitest';
 import { noopObserve } from '@mastra/core/tools';
 import { getCustomerTool } from '../../src/mastra/tools/customer';

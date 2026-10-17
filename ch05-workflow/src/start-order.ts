@@ -1,4 +1,3 @@
-// src/start-order.ts
 import { mastra } from './mastra';
 import { notifyApprover, notifyOncall } from './lib/notifier';
 

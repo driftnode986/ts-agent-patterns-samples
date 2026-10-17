@@ -1,4 +1,3 @@
-// src/agent.ts
 import { Agent, run } from '@openai/agents';
 
 const triageAgent = new Agent({

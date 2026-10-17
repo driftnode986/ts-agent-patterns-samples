@@ -1,4 +1,3 @@
-// src/lib/inventory.ts
 // 在庫サービスの代わり。在庫が 0 のとき引き当てに失敗する
 export const inventory = {
   stock: 10,

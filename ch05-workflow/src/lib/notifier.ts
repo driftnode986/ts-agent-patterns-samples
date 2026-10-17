@@ -1,4 +1,3 @@
-// src/lib/notifier.ts
 // Slack・承認者・当番への通知の代わり。送った内容を配列に残す
 export const sent: string[] = [];
 

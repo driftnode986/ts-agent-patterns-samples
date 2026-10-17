@@ -1,5 +1,4 @@
 // #region generate
-// src/scripts/structured-example.ts
 import { z } from 'zod';
 import { supportAgent } from '../mastra/agents';
 

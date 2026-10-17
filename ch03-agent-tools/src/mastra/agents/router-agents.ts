@@ -1,4 +1,3 @@
-// src/mastra/agents/router-agents.ts
 import { Agent } from '@mastra/core/agent';
 
 const instructions = 'ユーザーの質問に回答するアシスタントです。';

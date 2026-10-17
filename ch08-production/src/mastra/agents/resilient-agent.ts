@@ -1,4 +1,3 @@
-// src/mastra/agents/resilient-agent.ts
 import { Agent } from '@mastra/core/agent';
 import { anthropic } from '@ai-sdk/anthropic';
 import { openai } from '@ai-sdk/openai';

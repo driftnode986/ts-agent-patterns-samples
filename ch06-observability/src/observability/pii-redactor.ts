@@ -1,4 +1,3 @@
-// src/observability/pii-redactor.ts
 import type {
   SpanOutputProcessor,
   AnySpan,

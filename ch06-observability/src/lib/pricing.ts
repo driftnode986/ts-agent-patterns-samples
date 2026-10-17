@@ -1,4 +1,3 @@
-// src/lib/pricing.ts
 // 1M トークンあたりの料金 (USD)。執筆時の公開価格。最新は各社の料金表で確認する
 // #region pricing
 const PRICES: Record<string, { input: number; output: number }> = {

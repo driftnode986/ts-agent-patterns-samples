@@ -1,4 +1,3 @@
-// src/types/constructors.ts
 import { z } from 'zod';
 import type { ThreadId, UserId } from './branded';
 

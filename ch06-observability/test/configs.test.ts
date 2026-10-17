@@ -1,4 +1,3 @@
-// test/configs.test.ts
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { Mastra } from '@mastra/core';
 import { RequestContext } from '@mastra/core/request-context';

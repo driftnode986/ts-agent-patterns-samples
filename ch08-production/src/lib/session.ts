@@ -1,4 +1,3 @@
-// src/lib/session.ts
 // IdP（Okta など）が発行したトークンからセッションを引く部分の代わり。
 // 本番では JWT の署名を検証してロールを取り出す
 export interface Session {

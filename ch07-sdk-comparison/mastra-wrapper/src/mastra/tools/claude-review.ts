@@ -1,5 +1,4 @@
 // #region define
-// src/mastra/tools/claude-review.ts
 import { createTool } from '@mastra/core/tools';
 import { query } from '@anthropic-ai/claude-agent-sdk';
 import { z } from 'zod';

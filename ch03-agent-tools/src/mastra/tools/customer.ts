@@ -1,5 +1,4 @@
 // #region define
-// src/mastra/tools/customer.ts
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
 import { db } from '../../lib/db';

@@ -1,4 +1,3 @@
-// src/lib/cost-cap.ts
 // #region tracker
 interface CostTracker {
   dailyTokens: number;

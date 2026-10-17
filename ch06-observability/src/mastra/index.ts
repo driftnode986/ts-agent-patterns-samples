@@ -1,4 +1,3 @@
-// src/mastra/index.ts
 import { Mastra } from '@mastra/core';
 import { LangfuseExporter } from '@mastra/langfuse';
 import { Observability } from '@mastra/observability';

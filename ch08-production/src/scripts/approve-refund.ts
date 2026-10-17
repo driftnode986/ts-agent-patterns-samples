@@ -1,4 +1,3 @@
-// src/scripts/approve-refund.ts
 // #region start
 import { mastra } from '../mastra';
 

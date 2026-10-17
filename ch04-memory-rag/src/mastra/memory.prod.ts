@@ -1,4 +1,3 @@
-// src/mastra/memory.prod.ts
 import { Memory } from '@mastra/memory';
 import { PostgresStore, PgVector } from '@mastra/pg';
 

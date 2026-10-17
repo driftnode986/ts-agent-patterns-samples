@@ -1,4 +1,3 @@
-// src/types/agent-config.ts
 // #region immutable-config
 export type ImmutableAgentConfig = Readonly<{
   name: string;

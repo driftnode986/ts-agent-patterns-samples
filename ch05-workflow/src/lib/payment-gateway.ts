@@ -1,4 +1,3 @@
-// src/lib/payment-gateway.ts
 // 本章の決済サービスの代わり。メモリ上で動き、外部へは通信しない
 export const paymentGateway = {
   charges: new Map<string, number>(),

@@ -1,5 +1,4 @@
 // #region scorer-analyze
-// src/evals/quality-scorer.ts
 import { createScorer } from '@mastra/core/evals';
 import { z } from 'zod';
 

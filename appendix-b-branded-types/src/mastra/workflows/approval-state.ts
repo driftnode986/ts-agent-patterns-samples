@@ -1,4 +1,3 @@
-// src/mastra/workflows/approval-state.ts
 import type { UserId } from '../../types/branded';
 
 export type ApprovalStepOutput =

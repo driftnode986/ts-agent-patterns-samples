@@ -1,4 +1,3 @@
-// src/chat-agent.ts
 import { AIChatAgent } from '@cloudflare/ai-chat';
 import { anthropic } from '@ai-sdk/anthropic';
 import { convertToModelMessages, streamText } from 'ai';

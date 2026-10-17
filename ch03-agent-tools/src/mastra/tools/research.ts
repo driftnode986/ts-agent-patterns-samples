@@ -1,5 +1,4 @@
 // #region search-tools
-// src/mastra/tools/research.ts
 // 3.1 と 3.5 の Agent に渡す Tool。外部 API の代わりに固定のデータを返す
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';

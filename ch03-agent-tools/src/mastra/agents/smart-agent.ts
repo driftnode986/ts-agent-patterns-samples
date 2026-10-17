@@ -1,4 +1,3 @@
-// src/mastra/agents/smart-agent.ts
 import { Agent } from '@mastra/core/agent';
 import { selectModel } from '../../lib/model-router';
 

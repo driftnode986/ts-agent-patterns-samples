@@ -1,4 +1,3 @@
-// src/approve-order.ts
 import { mastra } from './mastra';
 import { approvalStep } from './mastra/workflows/steps/approval';
 

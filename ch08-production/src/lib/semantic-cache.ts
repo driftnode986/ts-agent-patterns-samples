@@ -1,4 +1,3 @@
-// src/lib/semantic-cache.ts
 // #region embed
 import { embed } from 'ai';
 import { openai } from '@ai-sdk/openai';

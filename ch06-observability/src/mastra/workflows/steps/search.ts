@@ -1,5 +1,4 @@
 // #region search-imports
-// src/mastra/workflows/steps/search.ts
 import { createStep } from '@mastra/core/workflows';
 import { SpanType } from '@mastra/core/observability';
 import { z } from 'zod';

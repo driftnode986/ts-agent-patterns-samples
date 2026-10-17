@@ -1,4 +1,3 @@
-// src/mastra/index.ts
 import { Mastra } from '@mastra/core';
 import { LibSQLStore } from '@mastra/libsql';
 import { paymentWorkflow } from './workflows/payment-workflow';

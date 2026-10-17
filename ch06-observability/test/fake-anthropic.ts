@@ -1,4 +1,3 @@
-// test/fake-anthropic.ts
 // Anthropic Messages API (ストリーミング) の偽物。fetch を差し替えて使う
 export function fakeAnthropicFetch(
   reply: (body: Record<string, unknown>) => string

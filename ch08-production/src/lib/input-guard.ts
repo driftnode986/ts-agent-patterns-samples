@@ -1,4 +1,3 @@
-// src/lib/input-guard.ts
 const INJECTION_PATTERNS = [
   /ignore\s+(previous|above|all)\s+instructions/i,
   /you\s+are\s+now\s+/i,

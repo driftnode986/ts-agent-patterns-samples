@@ -1,4 +1,3 @@
-// src/mastra/workflows/alert-workflow.ts
 import { createStep, createWorkflow } from '@mastra/core/workflows';
 import { z } from 'zod';
 import { notifySlack } from '../../lib/notifier';

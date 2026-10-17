@@ -1,4 +1,3 @@
-// src/types/agent-state.ts
 import type { ToolId } from './branded';
 
 export type AgentState =

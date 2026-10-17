@@ -1,4 +1,3 @@
-// src/mastra/index.ts
 import { Mastra } from '@mastra/core';
 import { supportAgent } from './agents/support';
 

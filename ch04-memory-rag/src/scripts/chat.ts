@@ -1,4 +1,3 @@
-// src/scripts/chat.ts
 import { supportAgent } from '../mastra/agents/support';
 
 // ユーザー「田中」の「サポート」スレッドに紐づく

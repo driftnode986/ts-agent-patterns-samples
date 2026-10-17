@@ -1,4 +1,3 @@
-// src/lib/cache.ts
 import { Redis } from 'ioredis';
 import crypto from 'crypto';
 

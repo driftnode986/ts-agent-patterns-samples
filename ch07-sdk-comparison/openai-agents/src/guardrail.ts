@@ -1,4 +1,3 @@
-// src/guardrail.ts
 import { Agent } from '@openai/agents';
 
 export const guardrailedAgent = new Agent({

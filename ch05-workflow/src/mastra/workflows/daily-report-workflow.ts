@@ -1,4 +1,3 @@
-// src/mastra/workflows/daily-report-workflow.ts
 import { createStep, createWorkflow } from '@mastra/core/workflows';
 import { z } from 'zod';
 

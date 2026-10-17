@@ -1,4 +1,3 @@
-// src/mastra/workflows/steps/cost-guard.ts
 import { createStep } from '@mastra/core/workflows';
 import { z } from 'zod';
 import { calculateCost } from '../../../lib/pricing';
