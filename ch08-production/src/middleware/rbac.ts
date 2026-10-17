@@ -24,7 +24,7 @@ export function checkAgentAccess(
 // #endregion
 
 // #region middleware
-// Next.js middleware での使用例
+// API ルートのハンドラの先頭で呼ぶ補助関数
 export async function agentMiddleware(
   req: Request,
   agentName: string

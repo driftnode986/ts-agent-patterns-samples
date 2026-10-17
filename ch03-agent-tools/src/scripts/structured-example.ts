@@ -36,6 +36,6 @@ const stream = await supportAgent.stream(
 );
 
 const tasks = await stream.object;
-// tasks は taskSchema[] 型
+// tasks は z.infer<typeof taskSchema>[] 型
 // #endregion
 console.log(tasks.length);

@@ -44,7 +44,7 @@ export const switchingObservability = new Observability({
       exporters: [new LangfuseExporter({ realtime: true })], // デバッグ
     },
   },
-  configSelector: (context, availableTracers) => {
+  configSelector: (context, availableConfigs) => {
     if (context.requestContext?.get('debug')) return 'debug';
     return process.env.NODE_ENV === 'production'
       ? 'langfuse'
