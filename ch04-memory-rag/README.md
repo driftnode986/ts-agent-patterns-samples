@@ -14,10 +14,12 @@ npm test            # テスト（偽のモデルを使うので API キー無�
 
 ## 本の節とファイル
 
+- **この章で扱うバージョン (2026-10 に確認)**
+  - `.env.example`
 - **4.1 なぜ Agent に Memory が必要か**
   - `src/mastra/index.ts`
 - **4.2 Message History　チャット履歴の保持**
-  - `src/mastra/agents/support.ts`
+  - `src/steps/support.step1.ts`
   - `src/steps/chat.step1.ts`
 - **4.3 Working Memory　構造化された情報の永続保持**
   - `src/steps/memory.step1.ts`
@@ -25,6 +27,7 @@ npm test            # テスト（偽のモデルを使うので API キー無�
   - `src/mastra/memory.dev.ts`
   - `src/mastra/memory.prod.ts`
 - **4.5 Memory のスコープと書き込み戦略**
+  - `src/mastra/agents/support.ts`
   - `src/scripts/chat.ts`
 - **4.6 Semantic Recall　過去の会話から関連情報を検索する**
   - `src/mastra/memory.ts`
