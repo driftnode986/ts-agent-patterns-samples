@@ -36,6 +36,20 @@ describe('バックエンドの切り替え (4.4 / 4.6)', () => {
     const recall = await import('../../src/mastra/memory');
     expect(dev.memory.vector).toBeDefined();
     expect(prod.memory.vector).toBeDefined();
-    expect(recall.memory.getMergedThreadConfig().semanticRecall).toMatchObject({ topK: 3 });
+    // dev / prod も vector と embedder を渡したうえで Semantic Recall を有効にしている
+    expect(dev.memory.getMergedThreadConfig().semanticRecall).toBe(true);
+    expect(prod.memory.getMergedThreadConfig().semanticRecall).toBe(true);
+    const config = recall.memory.getMergedThreadConfig();
+    expect(config.semanticRecall).toMatchObject({ topK: 3 });
+    // 4.6 の版でも 4.3 の Working Memory を残している
+    expect(config.workingMemory).toMatchObject({ enabled: true });
+  });
+});
+
+describe('Memory の構成 (4.1 / 4.5 / 4.7)', () => {
+  it('supportAgent と削除処理が同じ Memory を使う', async () => {
+    const { memory } = await import('../../src/mastra');
+    const { supportAgent } = await import('../../src/mastra/agents/support');
+    expect(await supportAgent.getMemory()).toBe(memory);
   });
 });

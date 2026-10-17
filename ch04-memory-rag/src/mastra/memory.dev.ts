@@ -12,4 +12,7 @@ export const memory = new Memory({
     url: 'file:./vector.db',
   }),
   embedder: 'openai/text-embedding-3-small',
+  options: {
+    semanticRecall: true,
+  },
 });

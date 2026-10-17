@@ -12,4 +12,7 @@ export const memory = new Memory({
     connectionString: process.env.DATABASE_URL!,
   }),
   embedder: 'openai/text-embedding-3-small',
+  options: {
+    semanticRecall: true,
+  },
 });

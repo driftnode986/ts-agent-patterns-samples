@@ -15,20 +15,31 @@ describe('supportAgent の Message History', () => {
     expect(promptText(1)).toContain('こんにちは、田中さん。');
   });
 
-  it('同じ resource でも別の thread の会話は渡らない (4.5)', async () => {
+  it('別の thread の会話は履歴に入らず、Semantic Recall の結果として渡る (4.5)', async () => {
     setTurns([{ text: '何でしょう。' }, { text: '順調です。' }]);
     await import('../../src/scripts/chat');
 
     expect(calls).toHaveLength(2);
-    expect(promptText(1)).toContain('進捗を教えてください');
-    expect(promptText(1)).not.toContain('質問があります');
+    const prompt = calls[1].prompt;
+    // Message History: 2 回目に渡る user / assistant のメッセージは今回の入力だけ
+    const history = prompt.filter((m) => m.role !== 'system');
+    expect(JSON.stringify(history)).toContain('進捗を教えてください');
+    expect(JSON.stringify(history)).not.toContain('質問があります');
+    // Semantic Recall: 同じ resource の別 thread のメッセージがシステムメッセージで渡る
+    const recalled = prompt.find(
+      (m) => m.role === 'system' && m.content.includes('remembered_from_other_conversation'),
+    );
+    expect(recalled?.content).toContain('質問があります');
+    // Working Memory も supportAgent に付いている
+    expect(promptText(1)).toContain('<working_memory_template>');
   });
 });
 
+// 4.2 の版 (Message History だけの Memory を持つ supportAgent)
 describe('supportAgent の messageHistory', () => {
   it('履歴が maxTokens を超えると、古いメッセージから渡さなくなる (4.2)', async () => {
     setTurns([{ text: '受け取りました。' }, { text: '続きをどうぞ。' }]);
-    const { supportAgent } = await import('../../src/mastra/agents/support');
+    const { supportAgent } = await import('../../src/steps/support.step1');
     const memory = { resource: 'user-budget', thread: 'thread-budget' };
     // 8,000 トークンを確実に超える長い 1 通目
     const long = `長文の目印 ${'data '.repeat(20_000)}`;
@@ -44,7 +55,7 @@ describe('supportAgent の messageHistory', () => {
 
   it('予算に収まる履歴は、2 回目の呼び出しにも渡る (4.2)', async () => {
     setTurns([{ text: '受け取りました。' }, { text: '続きをどうぞ。' }]);
-    const { supportAgent } = await import('../../src/mastra/agents/support');
+    const { supportAgent } = await import('../../src/steps/support.step1');
     const memory = { resource: 'user-budget', thread: 'thread-short' };
 
     await supportAgent.generate('短い目印の 1 通目', { memory });
