@@ -1,10 +1,13 @@
 // src/mastra/tools/search.ts
-type SearchError =
+import { isRateLimitError, vectorStore } from '../../lib/vector-store';
+import { failure, success, type Result } from '../../types/result';
+
+export type SearchError =
   | { type: 'rate_limit'; retryAfter: number }
   | { type: 'invalid_query'; message: string }
   | { type: 'timeout' };
 
-async function searchDocuments(
+export async function searchDocuments(
   query: string
 ): Promise<Result<string[], SearchError>> {
   if (!query.trim()) {

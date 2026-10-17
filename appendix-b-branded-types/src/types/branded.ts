@@ -1,9 +1,9 @@
 // src/types/branded.ts
 declare const brand: unique symbol;
 
-type Brand<T, B extends string> = T & { readonly [brand]: B };
+export type Brand<T, B extends string> = T & { readonly [brand]: B };
 
-type UserId = Brand<string, 'UserId'>;
-type ThreadId = Brand<string, 'ThreadId'>;
-type AgentId = Brand<string, 'AgentId'>;
-type ToolId = Brand<string, 'ToolId'>;
+export type UserId = Brand<string, 'UserId'>;
+export type ThreadId = Brand<string, 'ThreadId'>;
+export type AgentId = Brand<string, 'AgentId'>;
+export type ToolId = Brand<string, 'ToolId'>;

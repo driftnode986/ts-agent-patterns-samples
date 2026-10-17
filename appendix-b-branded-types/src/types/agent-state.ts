@@ -1,5 +1,7 @@
 // src/types/agent-state.ts
-type AgentState =
+import type { ToolId } from './branded';
+
+export type AgentState =
   | { status: 'idle' }
   | { status: 'thinking'; startedAt: number }
   | { status: 'executing_tool'; toolId: ToolId; input: unknown }
