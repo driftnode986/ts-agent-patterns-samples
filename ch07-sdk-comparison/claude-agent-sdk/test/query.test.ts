@@ -64,14 +64,32 @@ describe('Claude Agent SDK', () => {
     });
   });
 
-  it('read-only.ts blocks write tools and connects the MCP server', async () => {
+  it('read-only.ts blocks write tools, including the MCP server ones', async () => {
     vi.spyOn(console, 'log').mockImplementation(() => {});
+    vi.stubEnv('SPECS_DIR', undefined);
     await import('../src/read-only');
     expect(query.mock.calls[0]?.[0]).toMatchObject({
       options: {
-        disallowedTools: ['Write', 'Edit'],
-        mcpServers: { postgres: { command: 'npx' } },
+        disallowedTools: [
+          'Write',
+          'Edit',
+          'mcp__specs__write_file',
+          'mcp__specs__edit_file',
+          'mcp__specs__create_directory',
+          'mcp__specs__move_file',
+        ],
+        mcpServers: {
+          specs: {
+            command: 'npx',
+            args: [
+              '-y',
+              '@modelcontextprotocol/server-filesystem@1.0.0',
+              './docs/specs',
+            ],
+          },
+        },
       },
     });
+    vi.unstubAllEnvs();
   });
 });
