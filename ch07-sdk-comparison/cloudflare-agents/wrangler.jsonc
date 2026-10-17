@@ -1,0 +1,19 @@
+// wrangler.jsonc
+{
+  "name": "my-agent",
+  "compatibility_date": "2025-04-01",
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "CUSTOMER_SUPPORT",
+        "class_name": "CustomerSupport"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["CustomerSupport"]
+    }
+  ]
+}

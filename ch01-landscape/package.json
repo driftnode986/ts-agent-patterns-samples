@@ -1,0 +1,18 @@
+{
+  "name": "ch01-landscape",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p cloudflare-agents && tsc --noEmit -p mastra && tsc --noEmit -p vercel-ai-sdk",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "4.0.82",
+    "@mastra/core": "1.78.0",
+    "agents": "0.28.1",
+    "ai": "7.0.143"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "5.20261016.1"
+  }
+}
