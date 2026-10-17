@@ -21,7 +21,8 @@ export function createPIIFilteredAgent(agent: any) {
     generate: async (messages: any[]) => {
       const filteredMessages = messages.map((m) => ({
         ...m,
-        content: typeof m.content === 'string' ? maskPII(m.content) : m.content,
+        content:
+          typeof m.content === 'string' ? maskPII(m.content) : m.content,
       }));
       return agent.generate(filteredMessages);
     },

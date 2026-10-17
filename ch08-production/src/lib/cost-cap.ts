@@ -1,4 +1,5 @@
 // src/lib/cost-cap.ts
+// #region tracker
 interface CostTracker {
   dailyTokens: number;
   monthlyTokens: number;
@@ -12,7 +13,9 @@ const tracker: CostTracker = {
   dailyLimit: 1_000_000,
   monthlyLimit: 20_000_000,
 };
+// #endregion
 
+// #region usage
 export function checkCostCap(estimatedTokens: number): boolean {
   if (tracker.dailyTokens + estimatedTokens > tracker.dailyLimit) {
     console.error('Daily token limit exceeded');
@@ -30,3 +33,4 @@ export function recordUsage(inputTokens: number, outputTokens: number): void {
   tracker.dailyTokens += total;
   tracker.monthlyTokens += total;
 }
+// #endregion

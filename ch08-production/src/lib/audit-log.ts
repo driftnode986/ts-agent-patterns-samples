@@ -10,7 +10,7 @@ const AuditLogSchema = z.object({
   output: z.string().optional(),
   tokensUsed: z.number().optional(),
   durationMs: z.number().optional(),
-  metadata: z.record(z.unknown()).optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
 });
 
 type AuditLog = z.infer<typeof AuditLogSchema>;

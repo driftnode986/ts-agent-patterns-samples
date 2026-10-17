@@ -1,13 +1,14 @@
 // src/lib/semantic-cache.ts
 import { embed } from 'ai';
-import { anthropic } from '@ai-sdk/anthropic';
+import { openai } from '@ai-sdk/openai';
+import { db } from './db';
 
 export async function semanticCacheLookup(
   prompt: string,
   threshold: number = 0.95
 ): Promise<string | null> {
   const { embedding } = await embed({
-    model: anthropic.embedding('voyage-3'),
+    model: openai.embedding('text-embedding-3-small'),
     value: prompt,
   });
 

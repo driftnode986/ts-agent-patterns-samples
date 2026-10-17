@@ -4,7 +4,10 @@ export function validateOutput(output: string): {
   reason?: string;
 } {
   // システムプロンプトの漏洩チェック
-  if (output.includes('instructions:') || output.includes('system prompt')) {
+  if (
+    output.includes('instructions:') ||
+    output.includes('system prompt')
+  ) {
     return { safe: false, reason: 'Potential system prompt leak' };
   }
 

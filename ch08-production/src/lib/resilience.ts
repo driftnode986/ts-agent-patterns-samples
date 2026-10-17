@@ -1,11 +1,41 @@
 // src/lib/resilience.ts
+// #region retry
+import {
+  retry,
+  handleWhen,
+  ExponentialBackoff,
+} from 'cockatiel';
+
+const retryPolicy = retry(
+  handleWhen((err: any) => {
+    const status = err?.status || err?.statusCode;
+    return status === 429 || status === 500 || status === 503;
+  }),
+  {
+    maxAttempts: 3,
+    backoff: new ExponentialBackoff({
+      initialDelay: 1000,
+      maxDelay: 30000,
+      exponent: 2,
+    }),
+  }
+);
+
+export async function callLLMWithRetry<T>(
+  fn: () => Promise<T>
+): Promise<T> {
+  return retryPolicy.execute(fn);
+}
+// #endregion
+
+// #region breaker
 import {
   circuitBreaker,
   ConsecutiveBreaker,
-  SamplingBreaker,
+  CircuitState,
 } from 'cockatiel';
 
-const breaker = circuitBreaker(
+export const breaker = circuitBreaker(
   handleWhen((err: any) => {
     const status = err?.status || err?.statusCode;
     return status === 429 || status === 500 || status === 503;
@@ -17,8 +47,9 @@ const breaker = circuitBreaker(
 );
 
 breaker.onStateChange((state) => {
-  console.log(`Circuit breaker state: ${state}`);
-  if (state === 'open') {
+  console.log(`Circuit breaker state: ${CircuitState[state]}`);
+  if (state === CircuitState.Open) {
     // アラート送信: LLM API が応答不能
   }
 });
+// #endregion

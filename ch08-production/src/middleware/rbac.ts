@@ -1,5 +1,7 @@
 // src/middleware/rbac.ts
+// #region permissions
 import { z } from 'zod';
+import { getSession } from '../lib/session';
 
 const RoleSchema = z.enum(['admin', 'developer', 'viewer']);
 type Role = z.infer<typeof RoleSchema>;
@@ -19,7 +21,9 @@ export function checkAgentAccess(
   if (!allowedRoles) return false;
   return allowedRoles.includes(userRole);
 }
+// #endregion
 
+// #region middleware
 // Next.js middleware での使用例
 export async function agentMiddleware(
   req: Request,
@@ -37,3 +41,4 @@ export async function agentMiddleware(
 
   return null; // アクセス許可
 }
+// #endregion
