@@ -55,7 +55,8 @@ export default {
 // #endregion
 
 // #region exports
-// wrangler.jsonc で宣言した Durable Object のクラスは src/index.ts から export する
+// wrangler.jsonc で宣言した Durable Object のクラスは、
+// エントリの src/index.ts から export する
 export { ChatAgent } from './chat-agent';
 export { ResearchAgent } from './research-agent';
 // #endregion
