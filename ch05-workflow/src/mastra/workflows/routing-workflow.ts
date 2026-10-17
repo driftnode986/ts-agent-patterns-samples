@@ -1,4 +1,16 @@
+// #region imports
 // src/mastra/workflows/routing-workflow.ts
+import { createWorkflow } from '@mastra/core/workflows';
+import { z } from 'zod';
+import {
+  batchHandler,
+  formatResponse,
+  normalHandler,
+  urgentHandler,
+} from './steps/handlers';
+// #endregion
+
+// #region define
 export const routingWorkflow = createWorkflow({
   id: 'request-routing',
   inputSchema: z.object({
@@ -23,3 +35,4 @@ export const routingWorkflow = createWorkflow({
   ])
   .then(formatResponse)
   .commit();
+// #endregion

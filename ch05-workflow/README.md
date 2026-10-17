@@ -1,56 +1,37 @@
 # ch05 - Mastra Workflow
 
-Mastra Workflow の制御フロー (Sequential / Parallel / Branch / Loop)、Suspend & Resume による人間承認フロー、Saga パターンによる補償トランザクション、Step 間のデータ受け渡しと State 管理を実装します。
-
-## 本書の該当節
-
-- 5.2 createStep / createWorkflow — `src/mastra/workflows/steps/validate-input.ts`, `src/mastra/workflows/payment-workflow.ts`
-- 5.3 制御フロー — `src/mastra/workflows/analysis-workflow.ts` (parallel), `src/mastra/workflows/routing-workflow.ts` (branch)
-- 5.4 State の型定義 — `src/mastra/workflows/stateful-workflow.ts`
-- 5.6 Suspend & Resume — `src/mastra/workflows/steps/approval.ts`
-- 5.7 永続化 — `src/mastra/index.ts` (LibSQLStore)
-- 5.9 Saga パターン — `src/mastra/workflows/steps/compensate-payment.ts`
-- 5.11 Step から Agent を呼ぶ — `src/mastra/workflows/steps/ai-review.ts`
-- 5.2 Workflow 実行 — `src/index.ts`
+Mastra Workflow の制御フロー (Sequential / Parallel / Foreach / Branch / Loop)、Suspend & Resume による人間承認フロー、Saga パターンによる補償処理、Step 間のデータ受け渡しと State 管理を実装します。
 
 ## SDK バージョン
 
-- Mastra `@mastra/core@1.35.0`
-- `@mastra/libsql`
+- `@mastra/core` 1.78.0
+- `@mastra/libsql` 1.26.2
+- `@ai-sdk/anthropic` 4.0.82（5.11 の Agent）
+- `zod` 4.6.7
 
-## セットアップ
+## 本書の該当節
 
-```bash
-npm install
-```
+- 5.2 createStep / createWorkflow — `src/mastra/workflows/steps/validate-input.ts`, `src/mastra/workflows/payment-workflow.ts`, `src/index.ts`
+- 5.3 制御フロー — `sequential-workflow.ts` (.then), `analysis-workflow.ts` (.parallel), `foreach-workflow.ts` (.foreach), `routing-workflow.ts` (.branch), `refine-workflow.ts` (.dountil), `pagination-workflow.ts` (.dowhile)
+- 5.4・5.5 State とデータの受け渡し — `stateful-workflow.ts`, `map-workflow.ts`, `tier-workflow.ts` (requestContext)
+- 5.6 Suspend & Resume — `steps/approval.ts`, `order-workflow.ts`, `src/approve-order.ts`, `steps/review-request.ts` (bail), `reminder-workflow.ts` (sleep)
+- 5.7 永続化 — `src/mastra/index.ts` (LibSQLStore), `src/inspect-run.ts`
+- 5.8 time-travel — `src/retry-payment.ts` (timeTravel)
+- 5.9 エラーハンドリングと Saga — `retry-workflow.ts`, `alert-workflow.ts` (onError), `steps/compensate-payment.ts`, `steps/order-steps.ts`
+- 5.10 長時間 Workflow — `daily-report-workflow.ts` (schedule), `src/start-order.ts` (結果のステータス)
+- 5.11 Step から Agent を呼ぶ — `steps/ai-review.ts`, `agent-step-workflow.ts`, `src/mastra/agents/reviewer.ts`
 
-## 構成
-
-- `src/mastra/workflows/payment-workflow.ts` — Sequential 制御フロー (.then)
-- `src/mastra/workflows/analysis-workflow.ts` — Parallel 制御フロー (.parallel)
-- `src/mastra/workflows/routing-workflow.ts` — Branch 条件分岐 (.branch)
-- `src/mastra/workflows/stateful-workflow.ts` — stateSchema による共有 State
-- `src/mastra/workflows/steps/validate-input.ts` — Zod バリデーション Step
-- `src/mastra/workflows/steps/approval.ts` — Suspend & Resume (人間承認)
-- `src/mastra/workflows/steps/compensate-payment.ts` — Saga 補償 Step
-- `src/mastra/workflows/steps/ai-review.ts` — Step 内での Agent 呼び出し
-- `src/mastra/index.ts` — Mastra + LibSQLStore (Workflow 永続化)
-- `src/index.ts` — Workflow 実行 (createRun + start)
+`src/lib/` は決済・在庫・通知・外部 API の代わりに、メモリ上で動く簡単な実装です。
 
 ## 実行方法
 
 ```bash
-npx vitest run ch05-workflow/
-npx tsx ch05-workflow/src/index.ts
+# repo 直下で依存を入れる（npm workspaces）
+npm install
+
+cd ch05-workflow
+npm run typecheck
+npm test
 ```
 
-## トピック
-
-- DAG ベースの Workflow エンジンと決定論的な処理順序
-- 5 つの制御フロー: .then (sequential) / .parallel / .foreach / .branch / .dountil
-- stateSchema による Step 間の型安全なデータ共有
-- Suspend & Resume: 人間承認フロー (suspend → 外部通知 → resume/bail)
-- Saga パターン: 分散トランザクションの補償処理
-- Step 内から Agent を呼び出す 3 つのパターン
-- LibSQLStore による Workflow 実行状態の永続化
-- time-travel debug: 任意の Step からの再実行 (restart)
+テストは LLM を呼びません（Agent のモデルは `ai/test` の偽モデルに差し替えます）。保存先は LibSQL のメモリ上のデータベースです。

@@ -1,3 +1,4 @@
+// #region approval-schemas
 // src/mastra/workflows/steps/approval.ts
 import { createStep } from '@mastra/core/workflows';
 import { z } from 'zod';
@@ -20,6 +21,8 @@ export const approvalStep = createStep({
     reason: z.string(),
     requiredApprover: z.string(),
   }),
+  // #endregion
+  // #region approval-execute
   execute: async ({ inputData, resumeData, suspend }) => {
     if (!resumeData?.approved) {
       await suspend({
@@ -33,3 +36,4 @@ export const approvalStep = createStep({
     };
   },
 });
+// #endregion
